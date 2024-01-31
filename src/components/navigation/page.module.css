@@ -1,0 +1,40 @@
+.NavigationBar {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  background-color: #f5e4d175;
+}
+
+.Logo {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Logo img {
+  width: auto;
+  height: 60%;
+}
+
+.Account {
+  height: 100%;
+  width: 35%;
+  padding-inline: 30px;
+}
+
+.Account_Link {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.Account_Info {
+  display: flex;
+  flex-direction: column;
+}

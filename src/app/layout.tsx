@@ -19,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={titi.className}>{children}</body>
+      <body className={titi.className}>
+        <div className="page">{children}</div>
+      </body>
     </html>
   );
 }

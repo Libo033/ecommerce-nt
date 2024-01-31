@@ -4,6 +4,13 @@
   padding: 0;
 }
 
+.page {
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f9f9f9;
+}
+
 .LinkA {
   font-size: 13px;
   color: rgba(25, 118, 210);
