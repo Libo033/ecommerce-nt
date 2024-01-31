@@ -1,6 +1,6 @@
 .Divider {
   max-width: 444px;
-  width: 30%;
+  width: 36%;
   margin-top: 16px;
   margin-bottom: 16px;
   margin-left: auto;
@@ -9,7 +9,7 @@
 
 @media (641px <= width <= 1007px) {
   .Divider {
-    width: 48%;
+    width: 51%;
   }
 }
 
