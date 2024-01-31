@@ -91,4 +91,26 @@
     justify-content: center;
     align-items: center;
   }
+
+  .Drawer {
+    height: 100%;
+    width: 72vw;
+    background-color: #f5e4d181;
+  }
+
+  .Drawer_Sesion {
+    padding-top: 36px;
+    padding-inline: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .Drawer_Sesion p {
+    font-size: larger;
+    font-weight: 600;
+    text-align: center;
+    text-wrap: pretty;
+  }
 }

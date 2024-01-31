@@ -20,6 +20,7 @@ const NavigationBar: React.FC<{ logo: string; name: string }> = ({
       <div className={styles.Logo_Search}>
         <TextField
           fullWidth
+          autoComplete="off"
           placeholder="Buscar un producto"
           InputProps={{
             startAdornment: (
