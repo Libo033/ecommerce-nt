@@ -1,20 +1,23 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./page.module.css";
-import { InputAdornment, TextField } from "@mui/material";
-import { AccountCircle, Search } from "@mui/icons-material";
+import { Drawer, InputAdornment, TextField } from "@mui/material";
+import { AccountCircle, Menu, Search } from "@mui/icons-material";
 import Link from "next/link";
+import NavigationDrawer from "./NavigationDrawer";
 
 const NavigationBar: React.FC<{ logo: string; name: string }> = ({
   logo,
   name,
 }) => {
+  const [toggleDrawer, setToggleDrawer] = useState<boolean>(false);
+
   return (
     <nav className={styles.NavigationBar}>
       <Link href={"/"} className={styles.Logo}>
         <img src={logo} alt={name} />
       </Link>
-      <div style={{ width: "45%" }}>
+      <div className={styles.Logo_Search}>
         <TextField
           fullWidth
           placeholder="Buscar un producto"
@@ -52,6 +55,16 @@ const NavigationBar: React.FC<{ logo: string; name: string }> = ({
           </div>
         </Link>
       </div>
+      <div className={styles.Menu} onClick={() => setToggleDrawer(true)}>
+        <Menu sx={{ fontSize: "45px" }} />
+      </div>
+      <Drawer
+        anchor="right"
+        open={toggleDrawer}
+        onClose={() => setToggleDrawer(false)}
+      >
+        <NavigationDrawer />
+      </Drawer>
     </nav>
   );
 };
