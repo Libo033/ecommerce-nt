@@ -18,7 +18,7 @@ const LoginForm: React.FC<{ forgotPass: string; signUp: string }> = ({
         <Image src={"/img/login.svg"} alt="login" width={90} height={90} />
       </div>
       <p className={styles.Form_Title}>Iniciar Sesion</p>
-      <form className={styles.Form_Form}>
+      <form style={{height: "300px"}} className={styles.Form_Form}>
         <TextField
           id={$EMAIL}
           label="Email"

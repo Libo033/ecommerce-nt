@@ -1,7 +1,12 @@
+import Recover from "@/components/auth/Recover";
 import React from "react";
 
 const RecoverPassword = () => {
-  return <div>RecoverPassword</div>;
+  return (
+    <div>
+      <Recover />
+    </div>
+  );
 };
 
 export default RecoverPassword;

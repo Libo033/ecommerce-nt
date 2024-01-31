@@ -22,10 +22,17 @@
   font-size: x-large;
 }
 
+.Form_SubTitle {
+  padding-inline: 12px;
+  margin-top: 9px;
+  font-weight: 300;
+  color: gray;
+  text-align: center;
+}
+
 .Form_Form {
   max-width: 444px;
   width: 30%;
-  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -74,6 +81,16 @@
 .Button img {
   width: 27px;
   height: auto;
+}
+
+.RecoverSend {
+  margin-top: 21px;
+  margin-bottom: 36px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 @media (641px <= width <= 1007px) {
