@@ -29,23 +29,22 @@ const RegisterForm: React.FC<{ signIn: string }> = ({ signIn }) => {
     try {
       e.preventDefault();
 
-      if (
-        (document.getElementById($PASSWORD) as HTMLInputElement).value.length <
-        8
-      ) {
-        throw new Error("La contraseña debe contener mas de 8 digitos.", {
+      let pass = document.getElementById($PASSWORD) as HTMLInputElement;
+
+      if (pass.value.length < 8 || pass.value.length > 32) {
+        throw new Error("La contraseña debe tener entre 8 y 32 digitos.", {
           cause: "password",
         });
       }
-
-      console.log("Cuenta creada");
     } catch (err) {
       if (err instanceof Error) {
         switch (err.cause) {
           case "password":
             setError({ ...error, password: err });
             break;
-
+          case "email":
+            setError({ ...error, email: err });
+            break;
           default:
             break;
         }
@@ -99,7 +98,9 @@ const RegisterForm: React.FC<{ signIn: string }> = ({ signIn }) => {
           variant="outlined"
           fullWidth={true}
           type="password"
+          onChange={() => setError({ ...error, password: undefined })}
           error={error.password ? true : false}
+          helperText={error.password ? error.password.message : " "}
           required
         />
         <Button type="submit" variant="contained">
