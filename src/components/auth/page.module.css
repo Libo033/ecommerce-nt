@@ -1,0 +1,93 @@
+.Form {
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Form_ImgContainer {
+  display: flex;
+  background-color: rgb(156, 39, 176);
+  border-radius: 30px;
+  padding: 9px;
+}
+
+.Form_ImgContainer img {
+  width: 27px;
+  height: auto;
+}
+
+.Form_Title {
+  font-weight: 500;
+  font-size: x-large;
+}
+
+.Form_Form {
+  max-width: 444px;
+  width: 30%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.Form_Links {
+  max-width: 444px;
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+.ButtonGroup {
+  max-width: 444px;
+  padding-block: 6px;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.Button {
+  transition: 60ms ease-in-out 0s;
+  padding-block: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #606060;
+  background-color: white;
+  border: 1px solid #bcbcbc;
+  border-radius: 12px;
+}
+
+.Button:hover {
+  transition: 60ms ease-in-out 0s;
+  transform: translateY(-2px);
+  box-shadow: 1px 3px 6px gainsboro;
+}
+
+.Button img {
+  width: 27px;
+  height: auto;
+}
+
+@media (641px <= width <= 1007px) {
+  .Form_Form,
+  .Form_Links,
+  .ButtonGroup {
+    width: 48%;
+  }
+}
+
+@media (width <= 640px) {
+  .Form_Form,
+  .Form_Links,
+  .ButtonGroup {
+    width: 90%;
+  }
+}
