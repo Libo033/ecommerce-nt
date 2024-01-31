@@ -7,12 +7,23 @@ import { Button, TextField } from "@mui/material";
 
 const Recover = () => {
   const [emailSent, setEmailSent] = useState<boolean>(false);
+  const [error, setError] = useState<Error | undefined>(undefined);
   const $EMAIL = useId();
 
   const emailSender = (e: FormEvent) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    setEmailSent(true);
+      if ((document.getElementById($EMAIL) as HTMLInputElement).value === "") {
+        throw new Error("Ingresa tu email.");
+      }
+
+      setEmailSent(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error);
+      }
+    }
   };
 
   return (
@@ -42,6 +53,9 @@ const Recover = () => {
             variant="outlined"
             fullWidth={true}
             type="email"
+            onChange={() => setError(undefined)}
+            error={error ? true : false}
+            helperText={error?.message}
           />
           <Button type="submit" variant="contained">
             ENVIAR
