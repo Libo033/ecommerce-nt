@@ -113,4 +113,19 @@
     text-align: center;
     text-wrap: pretty;
   }
+
+  .List {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .List li {
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 27px;
+    text-decoration: underline;
+    text-decoration-color: gray;
+  }
 }

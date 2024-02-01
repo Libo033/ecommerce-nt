@@ -4,9 +4,29 @@ import styles from "./page.module.css";
 import { Button, Divider } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import AccordionItems from "./AccordionItems";
 
 const NavigationDrawer = () => {
   const router = useRouter();
+
+  let items = [
+    {
+      _id: "1",
+      categoria: "Perfumeria",
+      opciones: [
+        { _id: "1", info: "Perfumes de hombre" },
+        { _id: "2", info: "Perfumes de mujer" },
+      ],
+    },
+    {
+      _id: "2",
+      categoria: "Cabello",
+      opciones: [
+        { _id: "1", info: "Para lavar" },
+        { _id: "2", info: "Para tratar" },
+      ],
+    },
+  ];
 
   return (
     <div className={styles.Drawer}>
@@ -27,6 +47,9 @@ const NavigationDrawer = () => {
           </Link>
         </span>
         <Divider />
+        <div>
+          <AccordionItems items={items} />
+        </div>
       </div>
     </div>
   );
