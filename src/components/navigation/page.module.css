@@ -48,6 +48,7 @@
 }
 
 .LoggedIn {
+  padding-left: 50%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -83,6 +84,11 @@
   .Account {
     width: 45%;
     padding-inline: 20px;
+  }
+
+  .LoggedIn {
+    padding-left: 51%;
+    gap: 18px;
   }
 }
 
