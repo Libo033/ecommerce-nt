@@ -63,6 +63,7 @@ const AccordionItems: React.FC<{
       {items.length > 0 &&
         items.map((i) => (
           <Accordion
+            key={i._id}
             expanded={expanded === i._id}
             onChange={handleChange(i._id)}
           >
@@ -72,6 +73,7 @@ const AccordionItems: React.FC<{
                 {i.opciones.length > 0 &&
                   i.opciones.map((o) => (
                     <li
+                      key={o._id}
                       onClick={() =>
                         router.push(
                           `/prods/${i.categoria.toLowerCase()}?by=${o._id}`
