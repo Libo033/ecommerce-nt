@@ -2,15 +2,20 @@
 import React, { useState } from "react";
 import styles from "./page.module.css";
 import { Drawer, InputAdornment, TextField } from "@mui/material";
-import { AccountCircle, Menu, Search } from "@mui/icons-material";
+import { Menu as MenuDrawer, Search } from "@mui/icons-material";
 import Link from "next/link";
 import NavigationDrawer from "./NavigationDrawer";
+import { useRouter } from "next/navigation";
+import NavigationBarOptions from "./NavigationBarOptions";
 
-const NavigationBar: React.FC<{ logo: string; name: string }> = ({
-  logo,
-  name,
-}) => {
+const NavigationBar: React.FC<{
+  logo: string;
+  name: string;
+  profile: string;
+  cart: string;
+}> = ({ logo, name, profile, cart }) => {
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false);
+  const [user, setUser] = useState<boolean>(true);
 
   return (
     <nav className={styles.NavigationBar}>
@@ -34,37 +39,17 @@ const NavigationBar: React.FC<{ logo: string; name: string }> = ({
         />
       </div>
       <div className={styles.Account}>
-        <Link href={"/login"} className={styles.Account_Link}>
-          <div className={styles.Account_Logo}>
-            <AccountCircle
-              sx={{
-                fontSize: "36px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            />
-          </div>
-          <div className={styles.Account_Info}>
-            <span style={{ fontWeight: "600", fontSize: "16px" }}>
-              Mi cuenta
-            </span>
-            <span
-              style={{ fontWeight: "400", fontSize: "14px", color: "gray" }}
-            >
-              Iniciar sesion o registrarse.
-            </span>
-          </div>
-        </Link>
+        <NavigationBarOptions user={user} profile={profile} cart={cart} />
       </div>
       <div className={styles.Menu} onClick={() => setToggleDrawer(true)}>
-        <Menu sx={{ fontSize: "45px" }} />
+        <MenuDrawer sx={{ fontSize: "45px" }} />
       </div>
       <Drawer
         anchor="right"
         open={toggleDrawer}
         onClose={() => setToggleDrawer(false)}
       >
-        <NavigationDrawer />
+        <NavigationDrawer user={user} />
       </Drawer>
     </nav>
   );

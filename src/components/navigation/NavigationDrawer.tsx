@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AccordionItems from "./AccordionItems";
 
-const NavigationDrawer = () => {
+const NavigationDrawer: React.FC<{ user: boolean }> = ({ user }) => {
   const router = useRouter();
 
   let items = [
@@ -30,26 +30,30 @@ const NavigationDrawer = () => {
 
   return (
     <div className={styles.Drawer}>
-      <div className={styles.Drawer_Sesion}>
-        <p>Inicia sesion para mejorar tu experiencia</p>
-        <Button
-          onClick={() => router.push("/login")}
-          fullWidth
-          variant="contained"
-          color="success"
-        >
-          INICIA SESION
-        </Button>
-        <span style={{ fontSize: "13px" }}>
-          No tenes cuenta?{" "}
-          <Link href={"/register"} className="LinkA">
-            Registrate!
-          </Link>
-        </span>
-        <Divider />
-        <div>
-          <AccordionItems items={items} />
+      {user ? (
+        <div></div>
+      ) : (
+        <div className={styles.Drawer_Sesion}>
+          <p>Inicia sesion para mejorar tu experiencia</p>
+          <Button
+            onClick={() => router.push("/login")}
+            fullWidth
+            variant="contained"
+            color="success"
+          >
+            INICIA SESION
+          </Button>
+          <span style={{ fontSize: "13px" }}>
+            No tenes cuenta?{" "}
+            <Link href={"/register"} className="LinkA">
+              Registrate!
+            </Link>
+          </span>
+          <Divider />
         </div>
+      )}
+      <div className={styles.Drawer_Items}>
+        <AccordionItems items={items} />
       </div>
     </div>
   );

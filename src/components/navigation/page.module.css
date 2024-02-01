@@ -47,6 +47,25 @@
   display: none;
 }
 
+.LoggedIn {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+}
+
+.LoggedIn_Logo {
+  padding: 9px;
+  border-radius: 150px;
+  cursor: pointer;
+}
+
+.LoggedIn_Logo:hover {
+  transition: 150ms ease;
+  background-color: #f5e4d1;
+}
+
 @media (641px <= width <= 1007px) {
   .Logo {
     width: 18%;
@@ -112,6 +131,10 @@
     font-weight: 600;
     text-align: center;
     text-wrap: pretty;
+  }
+
+  .Drawer_Items {
+    padding-inline: 15px;
   }
 
   .List {
