@@ -118,9 +118,9 @@
   }
 
   .Drawer {
+    min-height: 100vh;
     height: 100%;
     width: 72vw;
-    background-color: #f5e4d181;
   }
 
   .Drawer_Sesion {

@@ -5,6 +5,12 @@ import { Button, Divider } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AccordionItems from "./AccordionItems";
+import {
+  AccountCircle,
+  AdminPanelSettings,
+  Logout,
+  ShoppingCart,
+} from "@mui/icons-material";
 
 const NavigationDrawer: React.FC<{ user: boolean }> = ({ user }) => {
   const router = useRouter();
@@ -30,9 +36,45 @@ const NavigationDrawer: React.FC<{ user: boolean }> = ({ user }) => {
 
   return (
     <div className={styles.Drawer}>
-      {user ? (
-        <div></div>
+      {user ? ( // Sesion iniciada
+        <div className={styles.Drawer_Sesion}>
+          <p>Bienvenido Valentin Libonati</p>
+          <Button
+            onClick={() => router.push("/profile")}
+            fullWidth
+            variant="contained"
+            color="success"
+            sx={{ gap: "7px" }}
+          >
+            <AccountCircle />
+            Perfil
+          </Button>
+          <Button
+            onClick={() => router.push("/cart")}
+            fullWidth
+            variant="contained"
+            color="success"
+            sx={{ gap: "7px" }}
+          >
+            <ShoppingCart />
+            Carrito
+          </Button>
+          {true && ( // Button Redirect para el administrador
+            <Button
+              onClick={() => router.push("/admin")}
+              fullWidth
+              variant="contained"
+              color="success"
+              sx={{ gap: "7px" }}
+            >
+              <AdminPanelSettings />
+              Admin
+            </Button>
+          )}
+          <Divider />
+        </div>
       ) : (
+        // Sin sesion iniciada
         <div className={styles.Drawer_Sesion}>
           <p>Inicia sesion para mejorar tu experiencia</p>
           <Button
@@ -53,8 +95,22 @@ const NavigationDrawer: React.FC<{ user: boolean }> = ({ user }) => {
         </div>
       )}
       <div className={styles.Drawer_Items}>
-        <AccordionItems items={items} />
+        <AccordionItems items={items} /> {/* items = categorias de venta */}
       </div>
+      {user && ( // LOGOUT
+        <div style={{ paddingTop: "12px" }} className={styles.Drawer_Sesion}>
+          <Divider />
+          <Button
+            fullWidth
+            variant="contained"
+            color="error"
+            sx={{ gap: "7px", marginBottom: "24px" }}
+          >
+            <Logout />
+            Cerrar sesión
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

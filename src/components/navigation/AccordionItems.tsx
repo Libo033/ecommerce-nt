@@ -99,15 +99,3 @@ const AccordionItems: React.FC<{
 };
 
 export default AccordionItems;
-
-/*
-      <Accordion expanded={expanded === "2"} onChange={handleChange("2")}>
-        <AccordionSummary>Cabello</AccordionSummary>
-        <AccordionDetails sx={{ backgroundColor: "#fff" }}>
-          <ul className={styles.List}>
-            <li onClick={() => router.push("/")}>Para lavar</li>
-            <li onClick={() => router.push("/")}>Para tratar</li>
-          </ul>
-        </AccordionDetails>
-      </Accordion> 
-*/
