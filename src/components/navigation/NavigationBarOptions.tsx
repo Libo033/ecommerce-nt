@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { Menu, MenuItem } from "@mui/material";
 import {
   AccountCircle,
+  AdminPanelSettings,
   LogoutOutlined,
   ShoppingCart,
 } from "@mui/icons-material";
@@ -61,6 +62,18 @@ const NavigationBarOptions: React.FC<{
                 <AccountCircle />
                 Perfil
               </MenuItem>
+              {true && ( // Button Redirect para el administrador
+                <MenuItem
+                  sx={{ gap: "9px" }}
+                  onClick={() => {
+                    router.push(`/admin`);
+                    handleClose();
+                  }}
+                >
+                  <AdminPanelSettings />
+                  Admin
+                </MenuItem>
+              )}
               <MenuItem sx={{ gap: "9px" }} onClick={handleClose}>
                 <LogoutOutlined />
                 Cerrar sesion
