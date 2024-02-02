@@ -1,0 +1,51 @@
+.HomeCard {
+  border: 1px solid gainsboro;
+  border-radius: 9px;
+  padding: 12px;
+  width: 270px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 1px 2px 9px gainsboro;
+}
+
+.HomeCard_Image {
+  width: 240px;
+  height: 240px;
+}
+
+.HomeCard_Image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.HomeCard_Body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.HomeCard_Marca {
+  font-size: small;
+  font-weight: 700;
+  color: gray;
+}
+
+.HomeCard_Detalle {
+  font-size: 17px;
+  font-weight: 600;
+  text-align: left;
+  text-wrap: pretty;
+}
+
+.HomeCard_Precio {
+  font-size: large;
+  font-weight: 700;
+  text-align: left;
+  text-wrap: pretty;
+  color: #3a734b;
+}
