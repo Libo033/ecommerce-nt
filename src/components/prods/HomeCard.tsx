@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
+import { IHomeCard } from "@/libs/interfaces";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -32,21 +33,14 @@ const theme = createTheme({
   },
 });
 
-const HomeCard: React.FC<{
-  _id: string;
-  marca: string;
-  detalle: string;
-  categoria: string;
-  img: string;
-  precio: number;
-}> = ({ _id, marca, detalle, img, categoria, precio }) => {
+const HomeCard: React.FC<IHomeCard> = ({ _id, marca, detalle, img, categoria, precio }) => {
   const router = useRouter();
 
   return (
     <ThemeProvider theme={theme}>
       <article className={styles.HomeCard}>
         <div className={styles.HomeCard_Image}>
-          <Image src={img} alt={detalle} width={450} height={450} />
+          <Image src={img[0]} alt={detalle} width={450} height={450} />
         </div>
         <div className={styles.HomeCard_Body}>
           <div>
