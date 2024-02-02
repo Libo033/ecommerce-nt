@@ -6,6 +6,7 @@ import { Menu as MenuDrawer, Search } from "@mui/icons-material";
 import Link from "next/link";
 import NavigationDrawer from "./NavigationDrawer";
 import NavigationBarOptions from "./NavigationBarOptions";
+import { usePathname } from "next/navigation";
 
 const NavigationBar: React.FC<{
   logo: string;
@@ -13,6 +14,7 @@ const NavigationBar: React.FC<{
   profile: string;
   cart: string;
 }> = ({ logo, name, profile, cart }) => {
+  const pathname = usePathname();
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false);
   const [user, setUser] = useState<boolean>(true);
 
@@ -36,7 +38,16 @@ const NavigationBar: React.FC<{
   ];
 
   return (
-    <nav>
+    <nav
+      style={
+        pathname === "/login" ||
+        pathname === "/register" ||
+        pathname === "/recover_password"
+          ? { display: "none" }
+          : undefined
+      }
+      className={styles.Navigation}
+    >
       <div className={styles.NavigationBar}>
         <Link href={"/"} className={styles.Logo}>
           <img src={logo} alt={name} />

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Titillium_Web } from "next/font/google";
 import "./globals.css";
+import NavigationBar from "@/components/navigation/NavigationBar";
+import { useRouter } from "next/navigation";
 
 const titi = Titillium_Web({
   subsets: ["latin"],
@@ -20,7 +22,15 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={titi.className}>
-        <div className="page">{children}</div>
+        <div className="page">
+          <NavigationBar
+            logo={"" || "/img/grillo.svg"}
+            name={"Ecommerce"}
+            profile={"profile"}
+            cart={"cart"}
+          />
+          {children}
+        </div>
       </body>
     </html>
   );

@@ -1,3 +1,10 @@
+.Navigation {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+  z-index: 999;
+}
+
 .NavigationBar {
   height: 100px;
   display: flex;
@@ -74,6 +81,7 @@
   justify-content: space-evenly;
   border-bottom: 1px solid #cecece;
   box-shadow: 1px 3px 6px gainsboro;
+  background-color: white;
 }
 
 .Category {
