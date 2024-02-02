@@ -1,7 +1,7 @@
 .Navigation {
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
   z-index: 999;
 }
 
@@ -109,6 +109,37 @@
   color: #67a26a;
 }
 
+.Footer {
+  width: 100%;
+  height: fit-content;
+  padding: 3% 4.5%;
+  background-color: #393939;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 12px;
+}
+
+.Footer_Social {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.Footer_Logos {
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Footer_Info p {
+  color: #f6f6f6;
+  font-size: small;
+  text-align: justify;
+  text-wrap: pretty;
+}
+
 @media (641px <= width <= 1007px) {
   .Logo {
     width: 18%;
@@ -153,7 +184,8 @@
     height: 45%;
   }
 
-  .Account, .NavigationBar_Items {
+  .Account,
+  .NavigationBar_Items {
     display: none;
   }
 
@@ -207,5 +239,9 @@
     padding-left: 27px;
     text-decoration: underline;
     text-decoration-color: gray;
+  }
+
+  .Footer_Info p {
+    text-align: center;
   }
 }

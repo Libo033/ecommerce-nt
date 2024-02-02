@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Titillium_Web } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "@/components/navigation/NavigationBar";
-import { useRouter } from "next/navigation";
+import Footer from "@/components/navigation/Footer";
 
 const titi = Titillium_Web({
   subsets: ["latin"],
@@ -30,6 +30,12 @@ export default function RootLayout({
             cart={"cart"}
           />
           {children}
+          <Footer
+            fb={""}
+            ig={""}
+            wp={""}
+            info={`© 2024 VALENTIN LIBONATI. Teléfonos. Si sos Consultor y tenés alguna duda sobre tu venta presencial, podés llamar al: 0810-444-0505 (Int. del país) o 4-837-6000 (Capital y GBA).`}
+          />
         </div>
       </body>
     </html>
