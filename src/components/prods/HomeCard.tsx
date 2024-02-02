@@ -62,6 +62,9 @@ const HomeCard: React.FC<{
           sx={{ fontWeight: "600", marginTop: "18px" }}
           variant="outlined"
           color="custom"
+          onClick={() =>
+            router.push(`/prods/${categoria.toLowerCase()}/${_id}`)
+          }
         >
           COMPRAR
         </Button>
