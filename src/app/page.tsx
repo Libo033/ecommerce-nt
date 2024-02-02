@@ -5,7 +5,12 @@ import NavigationBar from "@/components/navigation/NavigationBar";
 export default function Home() {
   return (
     <div>
-      <NavigationBar logo={"" || "/img/grillo.svg"} name={"Ecommerce"} />
+      <NavigationBar
+        logo={"" || "/img/grillo.svg"}
+        name={"Ecommerce"}
+        profile={"profile"}
+        cart={"cart"}
+      />
     </div>
   );
 }

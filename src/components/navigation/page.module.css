@@ -67,6 +67,40 @@
   background-color: #f5e4d1;
 }
 
+.NavigationBar_Items {
+  height: 45px;
+  padding-inline: 24px;
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 1px solid #cecece;
+  box-shadow: 1px 3px 6px gainsboro;
+}
+
+.Category {
+  cursor: pointer;
+  height: 100%;
+  border-bottom: 3px solid white;
+  font-weight: 600;
+}
+
+.Category:hover {
+  border-bottom: 3px solid #67a26a;
+  font-weight: 700;
+}
+
+.Category a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: black;
+}
+
+.Category a:hover {
+  color: #67a26a;
+}
+
 @media (641px <= width <= 1007px) {
   .Logo {
     width: 18%;
@@ -90,6 +124,15 @@
     padding-left: 51%;
     gap: 18px;
   }
+
+  .NavigationBar_Items {
+    height: 36px;
+    padding-inline: 12px;
+  }
+
+  .Category a {
+    font-size: small;
+  }
 }
 
 @media (width <= 640px) {
@@ -102,7 +145,7 @@
     height: 45%;
   }
 
-  .Account {
+  .Account, .NavigationBar_Items {
     display: none;
   }
 
