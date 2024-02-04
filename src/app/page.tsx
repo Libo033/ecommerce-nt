@@ -35,6 +35,24 @@ export default function Home() {
         "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
       ],
       precio: 34999,
+    },    {
+      _id: "4",
+      marca: "Jota",
+      detalle: "Jota rojo carmesí femenino 25ml",
+      categoria: "Perfumeria",
+      img: [
+        "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
+      ],
+      precio: 34999,
+    },    {
+      _id: "5",
+      marca: "Jota",
+      detalle: "Jota rojo carmesí femenino 25ml",
+      categoria: "Perfumeria",
+      img: [
+        "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
+      ],
+      precio: 34999,
     },
   ];
 

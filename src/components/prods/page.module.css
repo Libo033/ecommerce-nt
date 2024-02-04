@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   box-shadow: 1px 2px 9px gainsboro;
+  margin-block: 18px;
 }
 
 .HomeCard_Image {
@@ -62,5 +63,8 @@
   text-decoration: underline;
   text-decoration-color: #67a26a;
   text-decoration-thickness: 3px;
-  margin-bottom: 9px;
+}
+
+.HomeCardSlider_Section {
+  width: 100%;
 }
