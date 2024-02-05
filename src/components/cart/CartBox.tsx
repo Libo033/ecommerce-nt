@@ -1,14 +1,78 @@
 "use client";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import styles from "./page.module.css";
 import { Button, Divider } from "@mui/material";
 import { AddShoppingCart, RemoveShoppingCart } from "@mui/icons-material";
 import CartItem from "./CartItem";
+import { IHomeCard } from "@/libs/interfaces";
 
 /* https://dribbble.com/shots/14157532-GameWorld-Ecommerce-Cart */
 
 const CartBox = () => {
-  let items = [];
+  const items: IHomeCard[] = [
+    {
+      _id: "1",
+      marca: "jota",
+      detalle: "Jota azul marino femenino 30Ml",
+      img: [
+        "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
+      ],
+      categoria: "Perfumeria",
+      precio: 32000,
+    },
+    {
+      _id: "2",
+      marca: "jota",
+      detalle: "Jota blanco 30Ml",
+      img: [
+        "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
+      ],
+      categoria: "Perfumeria",
+      precio: 32000,
+    },
+    {
+      _id: "3",
+      marca: "jota",
+      detalle: "Jota blanco 30Ml",
+      img: [
+        "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
+      ],
+      categoria: "Perfumeria",
+      precio: 32000,
+    },
+    {
+      _id: "4",
+      marca: "jota",
+      detalle: "Jota blanco 30Ml",
+      img: [
+        "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
+      ],
+      categoria: "Perfumeria",
+      precio: 32000,
+    },
+    {
+      _id: "5",
+      marca: "jota",
+      detalle: "Jota blanco 30Ml",
+      img: [
+        "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
+      ],
+      categoria: "Perfumeria",
+      precio: 32000,
+    },
+    {
+      _id: "6",
+      marca: "jota",
+      detalle: "Jota blanco 30Ml",
+      img: [
+        "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
+      ],
+      categoria: "Perfumeria",
+      precio: 32000,
+    },
+  ];
+  let total: number = 0;
+  items.forEach((i) => (total = total + i.precio));
 
   return (
     <div className={styles.CartBox}>
@@ -21,12 +85,23 @@ const CartBox = () => {
         </Button>
       </div>
       <section className={styles.CartBox_ItemsContainer}>
-        <Divider />
-        <p className={styles.CartBox_Empty}>El carrito esta vacio.</p>
-        <Divider />
+        {items.length > 0 ? (
+          items.map((i) => (
+            <Fragment key={i._id}>
+              <CartItem {...i} />
+              <Divider />
+            </Fragment>
+          ))
+        ) : (
+          <>
+            <Divider />
+            <p className={styles.CartBox_Empty}>El carrito esta vacio.</p>
+            <Divider />
+          </>
+        )}
       </section>
       <div className={styles.CartBox_Total}>
-        <p>Subtotal: ${Intl.NumberFormat().format(120000)}</p>
+        <p>Subtotal: ${Intl.NumberFormat().format(total)}</p>
         <Button
           variant="contained"
           size="large"
