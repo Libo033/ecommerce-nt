@@ -80,7 +80,6 @@
   display: flex;
   justify-content: space-evenly;
   border-bottom: 1px solid #cecece;
-  box-shadow: 1px 3px 6px gainsboro;
   background-color: white;
 }
 
