@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { IHomeCard } from "@/libs/interfaces";
-import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import HomeCard from "./HomeCard";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
+
+import "swiper/css";
 import "swiper/css/autoplay";
 
 /* https://codesandbox.io/p/devbox/swiper-react-autoplay-pdrc53 */
@@ -20,7 +21,7 @@ const HomeCardSlider: React.FC<{ title: string; cards: Array<IHomeCard> }> = ({
     if (document) {
       let width = document.body.offsetWidth;
       console.log(width);
-      
+
       if (width >= 1172) {
         setSlides(4);
       } else if (width < 1172 && width >= 850) {
