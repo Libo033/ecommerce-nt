@@ -11,7 +11,7 @@
 }
 
 .page2 {
-  padding: 3% 1%;
+  padding: 2% 3%;
 }
 
 .LinkA {
@@ -22,4 +22,35 @@
 
 .LinkA:hover {
   text-decoration-color: rgba(25, 118, 210);
+}
+
+h1 {
+  color: white;
+  font-size: 45px;
+  font-weight: 600;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+h2 {
+  margin-top: 6px;
+  color: white;
+  font-weight: 400;
+  font-size: 21px;
+  text-align: center;
+  text-wrap: pretty;
+  padding-inline: 64px;
+}
+
+@media (width <= 640px) {
+  h1 {
+    font-size: 39px;
+  }
+
+  h2 {
+    margin-top: 6px;
+    font-weight: 400;
+    font-size: 20px;
+    padding-inline: 32px;
+  }
 }
