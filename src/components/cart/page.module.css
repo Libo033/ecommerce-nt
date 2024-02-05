@@ -1,0 +1,9 @@
+.CartBox {
+  margin-block: 9px;
+}
+
+.CartBox_ButtonGroup {
+  width: 100%;
+  display: flex;
+  gap: 18px;
+}

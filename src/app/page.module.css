@@ -7,6 +7,11 @@
   margin-right: auto;
 }
 
+.PageTitle {
+  font-size: 36px;
+  font-weight: 600;
+}
+
 @media (641px <= width <= 1007px) {
   .Divider {
     width: 51%;
