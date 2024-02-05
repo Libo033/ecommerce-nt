@@ -3,6 +3,7 @@ import { Titillium_Web } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "@/components/navigation/NavigationBar";
 import Footer from "@/components/navigation/Footer";
+import { AuthContextProvider } from "@/context/AuthContext";
 
 const titi = Titillium_Web({
   subsets: ["latin"],
@@ -23,19 +24,21 @@ export default function RootLayout({
     <html lang="es">
       <body className={titi.className}>
         <div className="page">
-          <NavigationBar
-            logo={"" || "/img/grillo.svg"}
-            name={"Ecommerce"}
-            profile={"profile"}
-            cart={"cart"}
-          />
-          {children}
-          <Footer
-            fb={""}
-            ig={""}
-            wp={""}
-            info={`© 2024 VALENTIN LIBONATI. Teléfonos. Si sos Consultor y tenés alguna duda sobre tu venta presencial, podés llamar al: 0810-444-0505 (Int. del país) o 4-837-6000 (Capital y GBA).`}
-          />
+          <AuthContextProvider>
+            <NavigationBar
+              logo={"" || "/img/grillo.svg"}
+              name={"Ecommerce"}
+              profile={"profile"}
+              cart={"cart"}
+            />
+            {children}
+            <Footer
+              fb={""}
+              ig={""}
+              wp={""}
+              info={`© 2024 VALENTIN LIBONATI. Teléfonos. Si sos Consultor y tenés alguna duda sobre tu venta presencial, podés llamar al: 0810-444-0505 (Int. del país) o 4-837-6000 (Capital y GBA).`}
+            />
+          </AuthContextProvider>
         </div>
       </body>
     </html>
