@@ -12,6 +12,8 @@
 
 .page2 {
   padding: 2% 3%;
+  height: fit-content;
+  min-height: 78vh;
 }
 
 .LinkA {

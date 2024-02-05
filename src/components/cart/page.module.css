@@ -7,3 +7,71 @@
   display: flex;
   gap: 18px;
 }
+
+.CartBox_ItemsContainer {
+  margin-top: 24px;
+}
+
+.CartBox_Total {
+  margin: 30px 45px;
+  font-size: 24px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+
+.CartBox_Empty {
+  font-size: larger;
+  color: gray;
+  text-align: center;
+  margin-block: 75px;
+}
+
+.CartItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.CartItem img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.CartItem_Info {
+  width: 33%;
+}
+
+.CartItem_Marca {
+  font-weight: 600;
+  font-size: large;
+}
+
+.CartItem_Id {
+  font-weight: 600;
+  font-size: small;
+  color: gray;
+}
+
+.CartItem_Q {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.CartItem_Q span {
+  font-size: 18px;
+  font-weight: 600;
+  border: 1px solid gainsboro;
+  border-radius: 6px;
+  padding: 3px 12px;
+  box-shadow: 3px 3px 6px gainsboro inset;
+}
+
+.CartItem_Price {
+  font-size: larger;
+  font-weight: 600;
+}
