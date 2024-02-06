@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./page.module.css";
 import { Drawer, InputAdornment, TextField } from "@mui/material";
 import { Menu as MenuDrawer, Search } from "@mui/icons-material";
@@ -7,6 +7,7 @@ import Link from "next/link";
 import NavigationDrawer from "./NavigationDrawer";
 import NavigationBarOptions from "./NavigationBarOptions";
 import { usePathname } from "next/navigation";
+import { AuthContext } from "@/context/AuthContext";
 
 const NavigationBar: React.FC<{
   logo: string;
@@ -14,9 +15,9 @@ const NavigationBar: React.FC<{
   profile: string;
   cart: string;
 }> = ({ logo, name, profile, cart }) => {
+  const { user, loaded, logOut } = useContext(AuthContext);
   const pathname = usePathname();
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false);
-  const [user, setUser] = useState<boolean>(true);
 
   let items = [
     {
@@ -69,7 +70,14 @@ const NavigationBar: React.FC<{
           />
         </div>
         <div className={styles.Account}>
-          <NavigationBarOptions user={user} profile={profile} cart={cart} />
+          {loaded && (
+            <NavigationBarOptions
+              user={user}
+              profile={profile}
+              cart={cart}
+              logOut={logOut}
+            />
+          )}
         </div>
         <div className={styles.Menu} onClick={() => setToggleDrawer(true)}>
           <MenuDrawer sx={{ fontSize: "45px" }} />
@@ -79,7 +87,7 @@ const NavigationBar: React.FC<{
           open={toggleDrawer}
           onClose={() => setToggleDrawer(false)}
         >
-          <NavigationDrawer user={user} />
+          <NavigationDrawer user={user} logOut={logOut} />
         </Drawer>
       </div>
       <div className={styles.NavigationBar_Items}>

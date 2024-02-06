@@ -10,20 +10,29 @@ import {
   ShoppingCart,
 } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import { User } from "firebase/auth";
 
 const NavigationBarOptions: React.FC<{
-  user: boolean;
+  user: User | null;
+  logOut: () => Promise<void>;
   profile: string;
   cart: string;
-}> = ({ user, profile, cart }) => {
+}> = ({ user, profile, cart, logOut }) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogOut = () => {
+    logOut();
+    handleClose();
   };
 
   return (
@@ -74,7 +83,7 @@ const NavigationBarOptions: React.FC<{
                   Admin
                 </MenuItem>
               )}
-              <MenuItem sx={{ gap: "9px" }} onClick={handleClose}>
+              <MenuItem sx={{ gap: "9px" }} onClick={handleLogOut}>
                 <LogoutOutlined />
                 Cerrar sesion
               </MenuItem>

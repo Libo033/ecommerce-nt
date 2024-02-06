@@ -11,8 +11,12 @@ import {
   Logout,
   ShoppingCart,
 } from "@mui/icons-material";
+import { User } from "firebase/auth";
 
-const NavigationDrawer: React.FC<{ user: boolean }> = ({ user }) => {
+const NavigationDrawer: React.FC<{
+  user: User | null;
+  logOut: () => Promise<void>;
+}> = ({ user, logOut }) => {
   const router = useRouter();
 
   let items = [
@@ -59,7 +63,7 @@ const NavigationDrawer: React.FC<{ user: boolean }> = ({ user }) => {
             <ShoppingCart />
             Carrito
           </Button>
-          {true && ( // Button Redirect para el administrador
+          {false && ( // Button Redirect para el administrador
             <Button
               onClick={() => router.push("/admin")}
               fullWidth
@@ -105,6 +109,7 @@ const NavigationDrawer: React.FC<{ user: boolean }> = ({ user }) => {
             variant="contained"
             color="error"
             sx={{ gap: "7px", marginBottom: "24px" }}
+            onClick={() => logOut()}
           >
             <Logout />
             Cerrar sesión
