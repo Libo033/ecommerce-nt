@@ -20,8 +20,6 @@ const HomeCardSlider: React.FC<{ title: string; cards: Array<IHomeCard> }> = ({
   useEffect(() => {
     if (document) {
       let width = document.body.offsetWidth;
-      console.log(width);
-
       if (width >= 1172) {
         setSlides(4);
       } else if (width < 1172 && width >= 850) {

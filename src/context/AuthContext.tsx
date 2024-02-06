@@ -21,10 +21,10 @@ const defaultValue: IAuthContext = {
   facebookSignIn: async () => {},
   logOut: async () => {},
   signUp: async () => {
-    return false;
+    return undefined;
   },
   signIn: async () => {
-    return false;
+    return undefined;
   },
   recoverPassword: async () => {},
 };
@@ -87,31 +87,20 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const signUp = async (
     email: string,
     password: string
-  ): Promise<boolean | Error> => {
+  ): Promise<undefined | Error> => {
     try {
-      const newUser = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      if (newUser) {
-        return true;
-      } else {
-        return false;
-      }
+      await createUserWithEmailAndPassword(auth, email, password);
     } catch (error) {
       if (error instanceof Error) {
         return error;
       }
-      return false;
     }
   };
 
   const signIn = async (
     email: string,
     password: string
-  ): Promise<Error | boolean> => {
+  ): Promise<undefined | Error> => {
     try {
       const userCredentials = await signInWithEmailAndPassword(
         auth,
@@ -129,12 +118,10 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
         });
       }
 
-      return true;
+      return undefined;
     } catch (error) {
       if (error instanceof Error) {
         return error;
-      } else {
-        return new Error("Something went wrong. Try again in a few minutes.");
       }
     }
   };

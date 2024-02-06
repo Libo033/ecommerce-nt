@@ -71,7 +71,7 @@ const NavigationBarOptions: React.FC<{
                 <AccountCircle />
                 Perfil
               </MenuItem>
-              {true && ( // Button Redirect para el administrador
+              {false && ( // Button Redirect para el administrador
                 <MenuItem
                   sx={{ gap: "9px" }}
                   onClick={() => {

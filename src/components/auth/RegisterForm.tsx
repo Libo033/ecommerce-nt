@@ -1,13 +1,15 @@
 "use client";
-import React, { FormEvent, useId, useState } from "react";
+import React, { FormEvent, useContext, useId, useState } from "react";
 import styles from "./page.module.css";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { AuthContext } from "@/context/AuthContext";
 
 const RegisterForm: React.FC<{ signIn: string }> = ({ signIn }) => {
+  const { loaded, signUp } = useContext(AuthContext);
   const router = useRouter();
   const [error, setError] = useState<{
     name: Error | undefined;
@@ -25,10 +27,11 @@ const RegisterForm: React.FC<{ signIn: string }> = ({ signIn }) => {
   const $EMAIL = useId();
   const $PASSWORD = useId();
 
-  const createAccount = (e: FormEvent) => {
+  const createAccount = async (e: FormEvent) => {
     try {
       e.preventDefault();
 
+      let em = document.getElementById($EMAIL) as HTMLInputElement;
       let pass = document.getElementById($PASSWORD) as HTMLInputElement;
 
       if (pass.value.length < 8 || pass.value.length > 32) {
@@ -36,6 +39,14 @@ const RegisterForm: React.FC<{ signIn: string }> = ({ signIn }) => {
           cause: "password",
         });
       }
+
+      let data = await signUp(em.value, pass.value);
+
+      if (data instanceof Error) {
+        throw data;
+      }
+
+      router.push("/");
     } catch (err) {
       if (err instanceof Error) {
         switch (err.cause) {
@@ -46,6 +57,7 @@ const RegisterForm: React.FC<{ signIn: string }> = ({ signIn }) => {
             setError({ ...error, email: err });
             break;
           default:
+            setError({ password: err, email: err, name: err, lastName: err });
             break;
         }
       }
@@ -103,9 +115,11 @@ const RegisterForm: React.FC<{ signIn: string }> = ({ signIn }) => {
           helperText={error.password ? error.password.message : " "}
           required
         />
-        <Button type="submit" variant="contained">
-          REGISTRARSE
-        </Button>
+        {loaded && (
+          <Button type="submit" variant="contained">
+            REGISTRARSE
+          </Button>
+        )}
       </form>
       <div style={{ justifyContent: "center" }} className={styles.Form_Links}>
         <Link className="LinkA" href={`/${signIn}`}>

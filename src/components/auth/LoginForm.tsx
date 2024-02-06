@@ -1,26 +1,40 @@
 "use client";
-import React, { FormEvent, useId, useState } from "react";
+import React, { FormEvent, useContext, useId, useState } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
-import { Button, FormHelperText, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import Link from "next/link";
+import { AuthContext } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC<{ forgotPass: string; signUp: string }> = ({
   forgotPass,
   signUp,
 }) => {
+  const router = useRouter();
+  const { loaded, signIn } = useContext(AuthContext);
   const [error, setError] = useState<Error | undefined>();
   const $EMAIL = useId();
   const $PASSWORD = useId();
 
-  const handleLogin = (e: FormEvent): void => {
+  const handleLogin = async (e: FormEvent) => {
     try {
       e.preventDefault();
 
-      throw new Error("Email o contraseña incorrectos.");
+      let data = await signIn(
+        (document.getElementById($EMAIL) as HTMLInputElement).value,
+        (document.getElementById($PASSWORD) as HTMLInputElement).value
+      );
+
+      if (data instanceof Error) {
+        throw data;
+      }
+
+      router.push("/");
     } catch (error) {
       if (error instanceof Error) {
         setError(error);
+        console.log(error);
       }
     }
   };
@@ -56,9 +70,11 @@ const LoginForm: React.FC<{ forgotPass: string; signUp: string }> = ({
           error={error ? true : false}
           required
         />
-        <Button type="submit" variant="contained">
-          Iniciar Sesion
-        </Button>
+        {loaded && (
+          <Button type="submit" variant="contained">
+            Iniciar Sesion
+          </Button>
+        )}
       </form>
       <div className={styles.Form_Links}>
         <Link className="LinkA" href={`/${forgotPass}`}>

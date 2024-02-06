@@ -11,17 +11,21 @@ const LoginButtonGroup = () => {
 
   const loginWithGoogle = () => {
     // usar redirect para despues de logearse
+    googleSignIn();
+    router.push("/");
   };
 
   const loginWithFacebook = () => {
     // usar redirect para despues de logearse
+    facebookSignIn();
+    router.push("/");
   };
 
   return (
     <div className={styles.ButtonGroup}>
       {loaded && (
         <>
-          <button className={styles.Button} onClick={() => googleSignIn()}>
+          <button className={styles.Button} onClick={() => loginWithGoogle()}>
             <Image
               src={"/img/google.svg"}
               alt="google"
@@ -30,7 +34,7 @@ const LoginButtonGroup = () => {
             />
             GOOGLE
           </button>
-          <button className={styles.Button}>
+          <button className={styles.Button} onClick={() => loginWithFacebook()}>
             <Image
               src={"/img/facebook.svg"}
               alt="facebook"

@@ -15,7 +15,7 @@ export interface IAuthContext {
   googleSignIn: () => Promise<void>;
   facebookSignIn: () => Promise<void>;
   logOut: () => Promise<void>;
-  signUp: (email: string, password: string) => Promise<Error | boolean>;
-  signIn: (email: string, password: string) => Promise<Error | boolean>;
+  signUp: (email: string, password: string) => Promise<undefined | Error>;
+  signIn: (email: string, password: string) => Promise<undefined | Error>;
   recoverPassword: (email: string) => Promise<void>;
 }
