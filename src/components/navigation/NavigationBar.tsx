@@ -90,7 +90,10 @@ const NavigationBar: React.FC<{
           <NavigationDrawer user={user} logOut={logOut} />
         </Drawer>
       </div>
-      <div className={styles.NavigationBar_Items}>
+      <div
+        style={pathname.includes("prods") ? { display: "none" } : undefined}
+        className={styles.NavigationBar_Items}
+      >
         {items.length > 0 &&
           items.map((i) => (
             <div className={styles.Category} key={i._id}>
