@@ -16,7 +16,7 @@ const Profile = () => {
           <div className={styles.Profile_Info}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               <TextField
-                sx={{ minWidth: "300px", width: "30%" }}
+                className={styles.TextField1}
                 label="email"
                 value={user.email}
                 disabled
@@ -32,11 +32,7 @@ const Profile = () => {
                   Email verificado
                 </p>
               ) : (
-                <Button
-                  sx={{ minWidth: "230px" }}
-                  variant="contained"
-                  size="large"
-                >
+                <Button className={styles.Button1} variant="contained">
                   Verificar email
                 </Button>
               )}
@@ -50,28 +46,17 @@ const Profile = () => {
               }}
             >
               <TextField
-                sx={{ minWidth: "300px", width: "30%" }}
+                className={styles.TextField1}
                 type="password"
                 value={"**************"}
                 label="contraseña"
                 disabled
               />
-              <Button
-                sx={{ minWidth: "230px" }}
-                variant="contained"
-                size="large"
-              >
+              <Button className={styles.Button1} variant="contained">
                 Cambiar contraseña
               </Button>
             </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "16px",
-                marginTop: "36px",
-              }}
-            >
+            <div style={{ marginTop: "50px" }}>
               <Button color="error" variant="contained" size="large">
                 Eliminar Cuenta
               </Button>

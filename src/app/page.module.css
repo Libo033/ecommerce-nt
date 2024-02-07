@@ -17,6 +17,15 @@
   margin-top: 24px;
 }
 
+.TextField1 {
+  min-width: 300px;
+  width: 30%;
+}
+
+.Button1 {
+  min-width: 230px;
+}
+
 @media (641px <= width <= 1007px) {
   .Divider {
     width: 51%;
@@ -26,5 +35,14 @@
 @media (width <= 640px) {
   .Divider {
     width: 90%;
+  }
+
+  .TextField1 {
+    min-width: 150px;
+    width: 100%;
+  }
+
+  .Button1 {
+    min-width: 120px;
   }
 }
