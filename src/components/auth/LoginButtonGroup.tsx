@@ -3,29 +3,15 @@ import React, { useContext } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { AuthContext } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
 
 const LoginButtonGroup = () => {
-  const router = useRouter();
   const { googleSignIn, facebookSignIn, loaded } = useContext(AuthContext);
-
-  const loginWithGoogle = () => {
-    // usar redirect para despues de logearse
-    googleSignIn();
-    router.push("/");
-  };
-
-  const loginWithFacebook = () => {
-    // usar redirect para despues de logearse
-    facebookSignIn();
-    router.push("/");
-  };
 
   return (
     <div className={styles.ButtonGroup}>
       {loaded && (
         <>
-          <button className={styles.Button} onClick={() => loginWithGoogle()}>
+          <button className={styles.Button} onClick={() => googleSignIn()}>
             <Image
               src={"/img/google.svg"}
               alt="google"
@@ -34,7 +20,7 @@ const LoginButtonGroup = () => {
             />
             GOOGLE
           </button>
-          <button className={styles.Button} onClick={() => loginWithFacebook()}>
+          <button className={styles.Button} onClick={() => facebookSignIn()}>
             <Image
               src={"/img/facebook.svg"}
               alt="facebook"

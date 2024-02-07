@@ -8,15 +8,17 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "@/context/AuthContext";
 
+interface IRegisterError {
+  name: Error | undefined;
+  lastName: Error | undefined;
+  email: Error | undefined;
+  password: Error | undefined;
+}
+
 const RegisterForm: React.FC<{ signIn: string }> = ({ signIn }) => {
   const { loaded, signUp } = useContext(AuthContext);
   const router = useRouter();
-  const [error, setError] = useState<{
-    name: Error | undefined;
-    lastName: Error | undefined;
-    email: Error | undefined;
-    password: Error | undefined;
-  }>({
+  const [error, setError] = useState<IRegisterError>({
     name: undefined,
     lastName: undefined,
     email: undefined,
@@ -46,7 +48,7 @@ const RegisterForm: React.FC<{ signIn: string }> = ({ signIn }) => {
         throw data;
       }
 
-      router.push("/");
+      router.push("/login");
     } catch (err) {
       if (err instanceof Error) {
         switch (err.cause) {

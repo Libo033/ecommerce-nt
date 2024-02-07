@@ -1,11 +1,13 @@
 "use client";
-import React, { FormEvent, useId, useState } from "react";
+import React, { FormEvent, useContext, useId, useState } from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { Button, TextField } from "@mui/material";
+import { AuthContext } from "@/context/AuthContext";
 
 const Recover = () => {
+  const { loaded, recoverPassword } = useContext(AuthContext);
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
   const $EMAIL = useId();
@@ -14,9 +16,13 @@ const Recover = () => {
     try {
       e.preventDefault();
 
-      if ((document.getElementById($EMAIL) as HTMLInputElement).value === "") {
+      let em = (document.getElementById($EMAIL) as HTMLInputElement).value;
+
+      if (em === "") {
         throw new Error("Ingresa tu email.");
       }
+
+      recoverPassword(em);
 
       setEmailSent(true);
     } catch (error) {

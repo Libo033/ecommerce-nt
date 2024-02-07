@@ -12,6 +12,8 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState, createContext } from "react";
 
 const defaultValue: IAuthContext = {
@@ -35,6 +37,7 @@ export const AuthContext: React.Context<IAuthContext> =
 export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const router: AppRouterInstance = useRouter();
   const [loaded, setLoaded] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
@@ -53,7 +56,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
         });
       }
 
-      location.reload();
+      router.push("/");
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
@@ -76,7 +79,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
         });
       }
 
-      location.reload();
+      router.push("/");
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
