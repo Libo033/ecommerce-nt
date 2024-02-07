@@ -1,0 +1,39 @@
+.Prods {
+  width: 100%;
+  height: fit-content;
+  margin-top: 24px;
+  display: flex;
+}
+
+.Prods_Filter {
+  width: 24%;
+}
+
+.Prods section {
+  width: 76%;
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  row-gap: 1rem;
+  column-gap: 1rem;
+}
+
+@media (641px <= width <= 1007px) {
+  .Prods_Filter {
+    display: none;
+  }
+
+  .Prods section {
+    width: 100%;
+  }
+}
+
+@media (width <= 640px) {
+  .Prods_Filter {
+    display: none;
+  }
+
+  .Prods section {
+    width: 100%;
+  }
+}

@@ -68,3 +68,13 @@
 .HomeCardSlider_Section {
   width: 100%;
 }
+
+.List {
+  list-style: none;
+}
+
+@media (641px <= width <= 1007px) {
+}
+
+@media (width <= 640px) {
+}
