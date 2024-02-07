@@ -26,6 +26,11 @@
   text-decoration-color: rgba(25, 118, 210);
 }
 
+.Breadcrumb_Span {
+  font-size: 13px;
+  color: rgba(25, 118, 210);
+}
+
 h1 {
   color: white;
   font-size: 45px;
