@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { ArrowForwardIosSharp } from "@mui/icons-material";
 import MuiAccordionSummary, {
   AccordionSummaryProps,
@@ -8,6 +8,7 @@ import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { Checkbox, FormControlLabel, styled } from "@mui/material";
 import styles from "./page.module.css";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -43,6 +44,9 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 const Filter = () => {
+  const router = useRouter();
+  const query = useSearchParams();
+  const pathname = usePathname();
   const [expanded, setExpanded] = useState<string | false>("");
 
   const handleChange =
@@ -50,19 +54,58 @@ const Filter = () => {
       setExpanded(newExpanded ? panel : false);
     };
 
+  const handleSetQuery = (filter: string, value: string) => {
+    let isFilterActive: string | null = query.get(filter);
+
+    if (isFilterActive) {
+      // BORRAR SOLO EL ELIMINADO Y NO TODO
+      router.push(`/prods`);
+    } else {
+      // AGREGAR UNO O VARIOS FILTROS
+      router.push(
+        `/prods?${
+          query.toString() === "" ? "" : query.toString() + "&"
+        }${filter}=${value.toLowerCase()}`
+      );
+    }
+
+    setExpanded(false);
+  };
+
   const categorias = ["Cabello", "Perfumeria"];
   const marcas = ["Jota", "Am", "BBVA"];
 
   return (
     <>
-      <Accordion expanded={expanded === "1"} onChange={handleChange("1")}>
+      <Accordion
+        sx={{ marginTop: "18px" }}
+        expanded={expanded === "1"}
+        onChange={handleChange("1")}
+      >
         <AccordionSummary>Categoria</AccordionSummary>
         <AccordionDetails>
           <ul className={styles.List}>
             {categorias.length > 0 &&
               categorias.map((c) => (
-                <li key={c}>
-                  <FormControlLabel control={<Checkbox />} label={c} />
+                <li
+                  key={c}
+                  style={
+                    query.get("categoria") === null
+                      ? { display: "block" }
+                      : query.get("categoria") === c.toLowerCase()
+                      ? undefined
+                      : { display: "none" }
+                  }
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={query.get("categoria") === c.toLowerCase()}
+                      />
+                    }
+                    label={c}
+                    onClick={() => handleSetQuery("categoria", c)}
+                  />
                 </li>
               ))}
           </ul>
@@ -74,8 +117,25 @@ const Filter = () => {
           <ul className={styles.List}>
             {marcas.length > 0 &&
               marcas.map((m) => (
-                <li key={m}>
-                  <FormControlLabel control={<Checkbox />} label={m} />
+                <li
+                  key={m}
+                  style={
+                    query.get("marca") === null
+                      ? { display: "block" }
+                      : query.get("marca") === m.toLowerCase()
+                      ? undefined
+                      : { display: "none" }
+                  }
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={query.get("marca") === m.toLowerCase()}
+                      />
+                    }
+                    label={m}
+                    onClick={() => handleSetQuery("marca", m)}
+                  />
                 </li>
               ))}
           </ul>
