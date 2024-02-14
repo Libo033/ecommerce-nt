@@ -1,18 +1,13 @@
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-/*
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
-
 export async function POST(req: Request) {
   try {
     const secret_key: string | undefined = process.env.JWT_SECRET;
     const res: { uid: string } = await req.json();
 
-    if (secret_key === undefined) {
-      throw new Error("Error al obtener las variables");
-    }
+    if (secret_key === undefined)
+      throw new Error("Error en el secreto de la app.");
 
     const my_token: string = jwt.sign(
       {
@@ -34,5 +29,3 @@ export async function POST(req: Request) {
     }
   }
 }
-
-*/

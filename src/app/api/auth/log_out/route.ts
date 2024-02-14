@@ -1,4 +1,3 @@
-/*
 import { cookies } from "next/headers";
 
 export function DELETE() {
@@ -8,8 +7,7 @@ export function DELETE() {
     return Response.json({ deleted: true }, { status: 200 });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return Response.json({ error: error.message}, { status: 500 });
+      return Response.json({ error: error.message }, { status: 500 });
     }
   }
 }
-*/
