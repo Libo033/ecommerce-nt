@@ -11,6 +11,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  deleteUser,
 } from "firebase/auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
@@ -29,6 +30,7 @@ const defaultValue: IAuthContext = {
     return undefined;
   },
   recoverPassword: async () => {},
+  deleteAccount: async () => {},
 };
 
 export const AuthContext: React.Context<IAuthContext> =
@@ -147,6 +149,10 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
     location.reload();
   };
 
+  const deleteAccount = async () => {
+    if (user) await deleteUser(user);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser !== null) {
@@ -171,6 +177,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
         signUp,
         signIn,
         recoverPassword,
+        deleteAccount,
       }}
     >
       {children}
