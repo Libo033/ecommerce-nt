@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { ArrowForwardIosSharp } from "@mui/icons-material";
 import MuiAccordionSummary, {
   AccordionSummaryProps,
@@ -8,7 +8,7 @@ import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { Checkbox, FormControlLabel, styled } from "@mui/material";
 import styles from "./page.module.css";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -46,7 +46,6 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 const Filter = () => {
   const router = useRouter();
   const query = useSearchParams();
-  const pathname = usePathname();
   const [expanded, setExpanded] = useState<string | false>("");
 
   const handleChange =
@@ -59,7 +58,19 @@ const Filter = () => {
 
     if (isFilterActive) {
       // BORRAR SOLO EL ELIMINADO Y NO TODO
-      router.push(`/prods`);
+      let ig = 0;
+      for (let i = 0; i < query.toString().length; i++) {
+        if (query.toString()[i] === "=") ig += 1;
+      }
+
+      if (ig >= 2) {
+        router.push(
+          "/prods?" +
+            query.toString().replace(`${filter}=${value.toLowerCase()}`, "")
+        );
+      } else {
+        router.push("/prods");
+      }
     } else {
       // AGREGAR UNO O VARIOS FILTROS
       router.push(
@@ -78,7 +89,7 @@ const Filter = () => {
   return (
     <>
       <Accordion
-        sx={{ marginTop: "18px" }}
+        style={{ marginTop: "18px" }}
         expanded={expanded === "1"}
         onChange={handleChange("1")}
       >
