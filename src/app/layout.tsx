@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Titillium_Web } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "@/components/navigation/NavigationBar";
 import Footer from "@/components/navigation/Footer";
 import { AuthContextProvider } from "@/context/AuthContext";
 
-const titi = Titillium_Web({
+const titi = Open_Sans({
   subsets: ["latin"],
-  weight: ["200", "300", "400", "600", "700", "900"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
