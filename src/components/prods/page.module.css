@@ -73,6 +73,26 @@
   list-style: none;
 }
 
+.RangeButton {
+  transition: 100ms ease;
+  height: fit-content;
+  border: 1px solid gainsboro;
+  background-color: #99999915;
+  border-radius: 99px;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.RangeButton:hover {
+  transition: 100ms ease;
+  background-color: #99999930;
+}
+
 @media (641px <= width <= 1007px) {
 }
 

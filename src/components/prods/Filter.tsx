@@ -1,12 +1,25 @@
 "use client";
 import React, { useState } from "react";
-import { ArrowForwardIosSharp } from "@mui/icons-material";
+import {
+  ArrowForward,
+  ArrowForwardIosSharp,
+  AttachMoney,
+} from "@mui/icons-material";
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import { Checkbox, FormControlLabel, styled } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormLabel,
+  InputAdornment,
+  OutlinedInputProps,
+  TextField,
+  styled,
+} from "@mui/material";
 import styles from "./page.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -83,8 +96,57 @@ const Filter = () => {
     setExpanded(false);
   };
 
+  const handleSetQueryPrice = () => {
+    let ig = 0;
+    for (let i = 0; i < query.toString().length; i++) {
+      if (query.toString()[i] === "=") ig += 1;
+    }
+    let min =
+      parseFloat(
+        (document.getElementById("desde") as HTMLInputElement).value
+      ) || 0;
+    let max =
+      parseFloat(
+        (document.getElementById("hasta") as HTMLInputElement).value
+      ) || 0;
+    let isFilterActive: string | null = query.get("min" || "max");
+
+    if (isFilterActive) {
+      // FILTRO ACTIVO = BORRAR
+      if (ig === 2) {
+        router.push("/prods");
+      } else {
+        //min=0&max=0
+        router.push(
+          `/prods?${query
+            .toString()
+            .replace(`${ig > 2 ? "&" : ""}min=${min}&max=${max}`, "")}`
+        );
+      }
+      (document.getElementById("desde") as HTMLInputElement).value = "";
+      (document.getElementById("hasta") as HTMLInputElement).value = "";
+    } else {
+      // FILTRO INACTIVO = ROUTER PUSH
+      router.push(
+        `/prods?${
+          query.toString() ? query.toString() + "&" : ""
+        }min=${min}&max=${max}`
+      );
+    }
+
+    setExpanded(false);
+  };
+
   const categorias = ["Cabello", "Perfumeria"];
   const marcas = ["Jota", "Am", "BBVA"];
+
+  let inputProps: Partial<OutlinedInputProps> = {
+    startAdornment: (
+      <InputAdornment position="start">
+        <AttachMoney />
+      </InputAdornment>
+    ),
+  };
 
   return (
     <>
@@ -150,6 +212,43 @@ const Filter = () => {
                 </li>
               ))}
           </ul>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion expanded={expanded === "3"} onChange={handleChange("3")}>
+        <AccordionSummary>Rango de Precio</AccordionSummary>
+        <AccordionDetails>
+          <div style={{ display: "flex", gap: "12px" }}>
+            <div>
+              <FormLabel htmlFor="desde">Desde</FormLabel>
+              <TextField
+                size="small"
+                id="desde"
+                placeholder="0,00"
+                type="number"
+                InputProps={inputProps}
+                sx={{ backgroundColor: "#fff", marginTop: "6px" }}
+              />
+            </div>
+            <div>
+              <FormLabel htmlFor="hasta">Hasta</FormLabel>
+              <TextField
+                size="small"
+                id="hasta"
+                type="number"
+                placeholder="0,00"
+                InputProps={inputProps}
+                sx={{ backgroundColor: "#fff", marginTop: "6px" }}
+              />
+            </div>
+          </div>
+          <Button
+            onClick={() => handleSetQueryPrice()}
+            sx={{ marginTop: "9px" }}
+            variant="outlined"
+            fullWidth
+          >
+            filtrar
+          </Button>
         </AccordionDetails>
       </Accordion>
     </>
