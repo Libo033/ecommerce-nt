@@ -47,7 +47,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
       const userCredentials = await signInWithPopup(auth, provider);
 
       if (userCredentials) {
-        await fetch(`/api/account/sign_in`, {
+        await fetch(`/api/auth/sign_in`, {
           method: "POST",
           body: JSON.stringify({ uid: userCredentials.user.uid }),
           headers: {
@@ -70,7 +70,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
       const userCredentials = await signInWithPopup(auth, provider);
 
       if (userCredentials) {
-        await fetch(`/api/account/sign_in`, {
+        await fetch(`/api/auth/sign_in`, {
           method: "POST",
           body: JSON.stringify({ uid: userCredentials.user.uid }),
           headers: {
@@ -112,7 +112,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
       );
 
       if (userCredentials) {
-        await fetch(`/api/account/sign_in`, {
+        await fetch(`/api/auth/sign_in`, {
           method: "POST",
           body: JSON.stringify({ uid: userCredentials.user.uid }),
           headers: {
@@ -142,7 +142,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const logOut = async (): Promise<void> => {
     signOut(auth);
 
-    await fetch(`/api/account/log_out`, { method: "DELETE" });
+    await fetch(`/api/auth/log_out`, { method: "DELETE" });
 
     location.reload();
   };
