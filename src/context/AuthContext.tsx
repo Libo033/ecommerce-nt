@@ -23,14 +23,10 @@ const defaultValue: IAuthContext = {
   googleSignIn: async () => {},
   facebookSignIn: async () => {},
   logOut: async () => {},
-  signUp: async () => {
-    return undefined;
-  },
-  signIn: async () => {
-    return undefined;
-  },
+  signUp: async () => undefined,
+  signIn: async () => undefined,
   recoverPassword: async () => {},
-  deleteAccount: async () => {},
+  deleteAccount: async () => false,
 };
 
 export const AuthContext: React.Context<IAuthContext> =
@@ -150,7 +146,13 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const deleteAccount = async () => {
-    if (user) await deleteUser(user);
+    try {
+      if (user) await deleteUser(user);
+      return true;
+    } catch (error) {
+      if (error instanceof Error) console.log(error);
+      return false;
+    }
   };
 
   useEffect(() => {

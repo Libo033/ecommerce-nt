@@ -6,7 +6,21 @@ import NoAccount from "@/components/auth/NoAccount";
 import { Button, TextField } from "@mui/material";
 
 const Profile = () => {
-  const { loaded, user } = useContext(AuthContext);
+  const { loaded, user, deleteAccount } = useContext(AuthContext);
+
+  const handleDeleteAccount = async () => {
+    if (confirm("Estas seguro que deseas borrar tu cuenta")) {
+      let res = await deleteAccount();
+
+      if (res) {
+        location.reload();
+      } else {
+        alert(
+          "No se pudo eliminar tu cuenta. Cerra sesion y volve a intentar!"
+        );
+      }
+    }
+  };
 
   return (
     <>
@@ -57,7 +71,12 @@ const Profile = () => {
               </Button>
             </div>
             <div style={{ marginTop: "50px" }}>
-              <Button color="error" variant="contained" size="large">
+              <Button
+                onClick={() => handleDeleteAccount()}
+                color="error"
+                variant="contained"
+                size="large"
+              >
                 Eliminar Cuenta
               </Button>
             </div>
