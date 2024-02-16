@@ -1,5 +1,5 @@
 "use client";
-import { auth } from "@/libs/firebase";
+import { auth, db } from "@/libs/firebase";
 import { IAuthContext } from "@/libs/interfaces";
 import {
   User,
@@ -13,6 +13,7 @@ import {
   sendPasswordResetEmail,
   deleteUser,
 } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState, createContext } from "react";
@@ -155,10 +156,24 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const addDocToFirestore = async (col: string, uid: string) => {
+    try {
+      const myDoc = await getDoc(doc(db, col, uid));
+
+      if (!myDoc.exists()) await setDoc(doc(db, col, uid), { role: "user" });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser !== null) {
         setUser(currentUser);
+
+        addDocToFirestore("users", currentUser.uid);
       }
       setLoaded(true);
     });
