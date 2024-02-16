@@ -1,10 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import {
-  ArrowForward,
-  ArrowForwardIosSharp,
-  AttachMoney,
-} from "@mui/icons-material";
+import { ArrowForwardIosSharp, AttachMoney } from "@mui/icons-material";
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
@@ -22,6 +18,7 @@ import {
 } from "@mui/material";
 import styles from "./page.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
+import { handleSetQuery, handleSetQueryPrice } from "@/libs/FilterHelpers";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -61,86 +58,14 @@ const Filter = () => {
   const query = useSearchParams();
   const [expanded, setExpanded] = useState<string | false>("");
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
-
-  const handleSetQuery = (filter: string, value: string) => {
-    let isFilterActive: string | null = query.get(filter);
-
-    if (isFilterActive) {
-      // BORRAR SOLO EL ELIMINADO Y NO TODO
-      let ig = 0;
-      for (let i = 0; i < query.toString().length; i++) {
-        if (query.toString()[i] === "=") ig += 1;
-      }
-
-      if (ig >= 2) {
-        router.push(
-          "/prods?" +
-            query.toString().replace(`${filter}=${value.toLowerCase()}`, "")
-        );
-      } else {
-        router.push("/prods");
-      }
-    } else {
-      // AGREGAR UNO O VARIOS FILTROS
-      router.push(
-        `/prods?${
-          query.toString() === "" ? "" : query.toString() + "&"
-        }${filter}=${value.toLowerCase()}`
-      );
-    }
-
-    setExpanded(false);
-  };
-
-  const handleSetQueryPrice = () => {
-    let ig = 0;
-    for (let i = 0; i < query.toString().length; i++) {
-      if (query.toString()[i] === "=") ig += 1;
-    }
-    let min =
-      parseFloat(
-        (document.getElementById("desde") as HTMLInputElement).value
-      ) || 0;
-    let max =
-      parseFloat(
-        (document.getElementById("hasta") as HTMLInputElement).value
-      ) || 0;
-    let isFilterActive: string | null = query.get("min" || "max");
-
-    if (isFilterActive) {
-      // FILTRO ACTIVO = BORRAR
-      if (ig === 2) {
-        router.push("/prods");
-      } else {
-        //min=0&max=0
-        router.push(
-          `/prods?${query
-            .toString()
-            .replace(`${ig > 2 ? "&" : ""}min=${min}&max=${max}`, "")}`
-        );
-      }
-      (document.getElementById("desde") as HTMLInputElement).value = "";
-      (document.getElementById("hasta") as HTMLInputElement).value = "";
-    } else {
-      // FILTRO INACTIVO = ROUTER PUSH
-      router.push(
-        `/prods?${
-          query.toString() ? query.toString() + "&" : ""
-        }min=${min}&max=${max}`
-      );
-    }
-
-    setExpanded(false);
+  const handleChange = (panel: string) => (e: any, newExpanded: boolean) => {
+    setExpanded(newExpanded ? panel : false);
   };
 
   const categorias = ["Cabello", "Perfumeria"];
   const marcas = ["Jota", "Am", "BBVA"];
 
-  let inputProps: Partial<OutlinedInputProps> = {
+  const inputProps: Partial<OutlinedInputProps> = {
     startAdornment: (
       <InputAdornment position="start">
         <AttachMoney />
@@ -177,7 +102,9 @@ const Filter = () => {
                       />
                     }
                     label={c}
-                    onClick={() => handleSetQuery("categoria", c)}
+                    onClick={() =>
+                      handleSetQuery("categoria", c, query, router, setExpanded)
+                    }
                   />
                 </li>
               ))}
@@ -207,7 +134,9 @@ const Filter = () => {
                       />
                     }
                     label={m}
-                    onClick={() => handleSetQuery("marca", m)}
+                    onClick={() =>
+                      handleSetQuery("marca", m, query, router, setExpanded)
+                    }
                   />
                 </li>
               ))}
@@ -242,12 +171,12 @@ const Filter = () => {
             </div>
           </div>
           <Button
-            onClick={() => handleSetQueryPrice()}
+            onClick={() => handleSetQueryPrice(query, router, setExpanded)}
             sx={{ marginTop: "9px" }}
             variant="outlined"
             fullWidth
           >
-            filtrar
+            {query.get("min" || "max") ? "reset" : "filter"}
           </Button>
         </AccordionDetails>
       </Accordion>
