@@ -28,6 +28,7 @@ const defaultValue: IAuthContext = {
   signIn: async () => undefined,
   recoverPassword: async () => {},
   deleteAccount: async () => false,
+  getUserRole: async () => false,
 };
 
 export const AuthContext: React.Context<IAuthContext> =
@@ -168,6 +169,23 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const getUserRole = async (): Promise<boolean> => {
+    try {
+      if (user) {
+        const myDoc = await getDoc(doc(db, "users", user.uid));
+        let role = myDoc.data();
+
+        if (role?.role === "admin") return true;
+      }
+
+      return false;
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+
+      return false;
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser !== null) {
@@ -195,6 +213,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
         signIn,
         recoverPassword,
         deleteAccount,
+        getUserRole,
       }}
     >
       {children}

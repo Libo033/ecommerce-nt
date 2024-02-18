@@ -19,4 +19,5 @@ export interface IAuthContext {
   signIn: (email: string, password: string) => Promise<undefined | Error>;
   recoverPassword: (email: string) => Promise<void>;
   deleteAccount: () => Promise<boolean>;
+  getUserRole: () => Promise<boolean>;
 }
