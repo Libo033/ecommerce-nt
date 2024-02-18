@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { Drawer, InputAdornment, TextField } from "@mui/material";
 import { Menu as MenuDrawer, Search } from "@mui/icons-material";
@@ -15,9 +15,10 @@ const NavigationBar: React.FC<{
   profile: string;
   cart: string;
 }> = ({ logo, name, profile, cart }) => {
-  const { user, loaded, logOut } = useContext(AuthContext);
+  const { user, loaded, getUserRole, logOut } = useContext(AuthContext);
   const pathname = usePathname();
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false);
+  const [admin, setAdmin] = useState<boolean>(false);
 
   let items = [
     {
@@ -37,6 +38,10 @@ const NavigationBar: React.FC<{
       ],
     },
   ];
+
+  useEffect(() => {
+    getUserRole().then((isAdmin) => setAdmin(isAdmin));
+  }, [getUserRole, loaded]);
 
   return (
     <nav
@@ -75,6 +80,7 @@ const NavigationBar: React.FC<{
               user={user}
               profile={profile}
               cart={cart}
+              admin={admin}
               logOut={logOut}
             />
           )}
@@ -87,7 +93,7 @@ const NavigationBar: React.FC<{
           open={toggleDrawer}
           onClose={() => setToggleDrawer(false)}
         >
-          <NavigationDrawer user={user} logOut={logOut} />
+          <NavigationDrawer user={user} admin={admin} logOut={logOut} />
         </Drawer>
       </div>
       <div

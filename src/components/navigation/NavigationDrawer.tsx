@@ -16,7 +16,8 @@ import { User } from "firebase/auth";
 const NavigationDrawer: React.FC<{
   user: User | null;
   logOut: () => Promise<void>;
-}> = ({ user, logOut }) => {
+  admin: boolean;
+}> = ({ user, logOut, admin }) => {
   const router = useRouter();
 
   let items = [
@@ -63,7 +64,7 @@ const NavigationDrawer: React.FC<{
             <ShoppingCart />
             Carrito
           </Button>
-          {false && ( // Button Redirect para el administrador
+          {admin && ( // Button Redirect para el administrador
             <Button
               onClick={() => router.push("/admin")}
               fullWidth

@@ -17,7 +17,8 @@ const NavigationBarOptions: React.FC<{
   logOut: () => Promise<void>;
   profile: string;
   cart: string;
-}> = ({ user, profile, cart, logOut }) => {
+  admin: boolean;
+}> = ({ user, profile, cart, logOut, admin }) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -71,7 +72,7 @@ const NavigationBarOptions: React.FC<{
                 <AccountCircle />
                 Perfil
               </MenuItem>
-              {false && ( // Button Redirect para el administrador
+              {admin && ( // Button Redirect para el administrador
                 <MenuItem
                   sx={{ gap: "9px" }}
                   onClick={() => {
