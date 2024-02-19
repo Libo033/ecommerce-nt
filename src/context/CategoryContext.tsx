@@ -1,3 +1,4 @@
+"use client";
 import { ICategory, ICategoryContext } from "@/libs/interfaces";
 import React, { useEffect, useState, createContext } from "react";
 
@@ -35,7 +36,7 @@ export const CategoryContextProvider: React.FC<{
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setCategories(data.categorias)
+        setCategories(data.categorias);
       })
       .catch((err) => {
         if (err instanceof Error) {

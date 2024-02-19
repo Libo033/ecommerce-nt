@@ -1,18 +1,26 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./page.module.css";
 import { AddCircleOutline, Delete, Edit } from "@mui/icons-material";
 import { Button, Modal, TextField } from "@mui/material";
+import { CategoryContext } from "@/context/CategoryContext";
 
-const MiniCardCategoria: React.FC<{ name: string; id: string }> = ({
-  name,
+const MiniCardCategoria: React.FC<{ nombre: string; id: string }> = ({
+  nombre,
   id,
 }) => {
+  const { updateOne, deleteOne } = useContext(CategoryContext);
+  const [inputName, setInputName] = useState<string>(nombre);
   const [modal, setModal] = useState<boolean>(false);
 
-  const handleDeleteCategory = () => {
-    if (confirm(`Estas seguro que deseas borrar la categoria ${name}?`)) {
-      console.log("Categoria borrada!");
+  const handleClose = () => {
+    setModal(false);
+    setInputName(nombre);
+  };
+
+  const handleDeleteCategory = async () => {
+    if (confirm(`Estas seguro que deseas borrar la categoria ${nombre}?`)) {
+      await deleteOne(id);
     }
   };
 
@@ -21,12 +29,12 @@ const MiniCardCategoria: React.FC<{ name: string; id: string }> = ({
       style={{ justifyContent: "space-between" }}
       className={styles.MiniCard}
     >
-      <p>{name}</p>
+      <p>{nombre}</p>
       <div className={styles.AdminIcons}>
         <Edit onClick={() => setModal(true)} sx={{ cursor: "pointer" }} />
         <Delete onClick={handleDeleteCategory} sx={{ cursor: "pointer" }} />
       </div>
-      <Modal open={modal} onClose={() => setModal(false)}>
+      <Modal open={modal} onClose={handleClose}>
         <form className={styles.Modal}>
           <p className={styles.ModalTitle}>Editar categoria</p>
           <TextField
@@ -36,6 +44,7 @@ const MiniCardCategoria: React.FC<{ name: string; id: string }> = ({
             variant="outlined"
             label="ID"
             autoComplete="off"
+            value={id}
             disabled
           />
           <TextField
@@ -45,9 +54,15 @@ const MiniCardCategoria: React.FC<{ name: string; id: string }> = ({
             variant="outlined"
             label="Nombre"
             autoComplete="off"
+            value={inputName}
+            onChange={(e) => setInputName(e.target.value)}
             required
           />
-          <Button fullWidth variant="contained">
+          <Button
+            onClick={async () => await updateOne(id, inputName)}
+            fullWidth
+            variant="contained"
+          >
             editar
           </Button>
         </form>
@@ -57,6 +72,8 @@ const MiniCardCategoria: React.FC<{ name: string; id: string }> = ({
 };
 
 const Categorias = () => {
+  const { categories, createOne } = useContext(CategoryContext);
+  const [inputName, setInputName] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
 
   return (
@@ -65,7 +82,10 @@ const Categorias = () => {
         <AddCircleOutline sx={{ fontSize: "small" }} /> Nueva Categoria
       </p>
       <section>
-        <MiniCardCategoria id="1" name={"Perfumeria"} />
+        {categories.length > 0 &&
+          categories.map((c) => (
+            <MiniCardCategoria key={c._id} id={c._id} nombre={c.nombre} />
+          ))}
       </section>
       <Modal open={modal} onClose={() => setModal(false)}>
         <form className={styles.Modal}>
@@ -77,9 +97,15 @@ const Categorias = () => {
             variant="outlined"
             label="Nombre"
             autoComplete="off"
+            value={inputName}
+            onChange={(e) => setInputName(e.target.value)}
             required
           />
-          <Button fullWidth variant="contained">
+          <Button
+            onClick={async () => await createOne(inputName)}
+            fullWidth
+            variant="contained"
+          >
             craer
           </Button>
         </form>
