@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../page.module.css";
 import { Breadcrumbs } from "@mui/material";
 import Link from "next/link";
+import Categorias from "@/components/admin/Categorias";
 
 const Option = ({ params }: { params: { opt: string } }) => {
   return (
@@ -12,6 +13,7 @@ const Option = ({ params }: { params: { opt: string } }) => {
         </Link>
         <span className="Breadcrumb_Span">{params.opt.toUpperCase()}</span>
       </Breadcrumbs>
+      <div>{params.opt === "categorias" && <Categorias />}</div>
     </div>
   );
 };

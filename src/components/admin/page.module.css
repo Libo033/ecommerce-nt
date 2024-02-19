@@ -6,7 +6,7 @@
   height: fit-content;
   border: 1px solid gainsboro;
   border-radius: 9px 3px;
-  padding: 12px 6px;
+  padding: 12px 18px;
   box-shadow: 3px 3px 6px gainsboro;
   text-decoration: none;
   margin: 12px 0px;
@@ -21,4 +21,45 @@
   font-weight: 500;
   font-size: large;
   color: black;
+}
+
+.AdminIcons {
+  display: flex;
+  gap: 18px;
+}
+
+.Categorias {
+  margin-top: 16px;
+}
+
+.Categorias_Nueva {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: small;
+  font-weight: 600;
+  text-decoration: underline;
+  color: green;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.Modal {
+  position: absolute;
+  width: 90%;
+  max-width: 444px;
+  height: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 18px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ModalTitle {
+  font-size: x-large;
+  font-weight: 600;
 }
