@@ -20,14 +20,23 @@ export const CategoryContextProvider: React.FC<{
   const [categories, setCategories] = useState<ICategory[]>(categoriesDefault);
 
   const createOne = async (nombre: string) => {
+    fetch(`/api/category`);
     return false;
   };
 
   const updateOne = async (id: string, nombre: string) => {
+    fetch(`/api/category/${id}`);
     return false;
   };
 
   const deleteOne = async (id: string) => {
+    setCategories(categories.filter((c) => c._id !== id));
+
+    const res = await fetch(`/api/category/${id}`, { method: "DELETE" });
+    const data: { code: number; deleted: boolean } = await res.json();
+
+    if (data.deleted) return true;
+
     return false;
   };
 
@@ -35,7 +44,6 @@ export const CategoryContextProvider: React.FC<{
     fetch(`/api/category`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setCategories(data.categorias);
       })
       .catch((err) => {
