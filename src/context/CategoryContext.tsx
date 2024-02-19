@@ -20,7 +20,19 @@ export const CategoryContextProvider: React.FC<{
   const [categories, setCategories] = useState<ICategory[]>(categoriesDefault);
 
   const createOne = async (nombre: string) => {
-    fetch(`/api/category`);
+    const res = await fetch(`/api/category`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre }),
+    });
+    const data: { code: number; created: boolean; id: string } =
+      await res.json();
+
+    if (data.created) {
+      setCategories([...categories, { _id: data.id, nombre }]);
+      return true;
+    }
+
     return false;
   };
 
