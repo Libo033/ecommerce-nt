@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const MiniCard: React.FC<{ name: string }> = ({ name }) => {
   return (
-    <Link href={`/admin/${name}`} className={styles.MiniCard}>
+    <Link href={`/admin/${name.toLowerCase()}`} className={styles.MiniCard}>
       <p>{name}</p>
     </Link>
   );
