@@ -29,7 +29,7 @@ export interface ICategory {
 
 export interface ICategoryContext {
   categories: ICategory[];
-  createOne: (id: string, nombre: string) => Promise<boolean>;
+  createOne: (nombre: string) => Promise<boolean>;
   updateOne: (id: string, nombre: string) => Promise<boolean>;
   deleteOne: (id: string) => Promise<boolean>;
 }

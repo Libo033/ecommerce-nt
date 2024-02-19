@@ -6,7 +6,7 @@ const categoriesDefault: ICategory[] = [{ _id: "1", nombre: "Perfumeria" }];
 
 const defaultValue: ICategoryContext = {
   categories: categoriesDefault,
-  createOne: async (id, nombre) => false,
+  createOne: async (nombre) => false,
   updateOne: async (id, nombre) => false,
   deleteOne: async (id) => false,
 };
@@ -19,7 +19,7 @@ export const CategoryContextProvider: React.FC<{
 }> = ({ children }) => {
   const [categories, setCategories] = useState<ICategory[]>(categoriesDefault);
 
-  const createOne = async (id: string, nombre: string) => {
+  const createOne = async (nombre: string) => {
     return false;
   };
 
