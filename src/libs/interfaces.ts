@@ -21,3 +21,15 @@ export interface IAuthContext {
   deleteAccount: () => Promise<boolean>;
   getUserRole: () => Promise<boolean>;
 }
+
+export interface ICategory {
+  _id: string;
+  nombre: string;
+}
+
+export interface ICategoryContext {
+  categories: ICategory[];
+  createOne: (id: string, nombre: string) => Promise<boolean>;
+  updateOne: (id: string, nombre: string) => Promise<boolean>;
+  deleteOne: (id: string) => Promise<boolean>;
+}
