@@ -4,6 +4,7 @@ import "./globals.css";
 import NavigationBar from "@/components/navigation/NavigationBar";
 import Footer from "@/components/navigation/Footer";
 import { AuthContextProvider } from "@/context/AuthContext";
+import { CategoryContextProvider } from "@/context/CategoryContext";
 
 const titi = Open_Sans({
   subsets: ["latin"],
@@ -25,19 +26,21 @@ export default function RootLayout({
       <body className={titi.className}>
         <div className="page">
           <AuthContextProvider>
-            <NavigationBar
-              logo={"" || "/img/grillo.svg"}
-              name={"Ecommerce"}
-              profile={"profile"}
-              cart={"cart"}
-            />
-            {children}
-            <Footer
-              fb={""}
-              ig={""}
-              wp={""}
-              info={`© 2024 VALENTIN LIBONATI. Teléfonos. Si sos Consultor y tenés alguna duda sobre tu venta presencial, podés llamar al: 0810-444-0505 (Int. del país) o 4-837-6000 (Capital y GBA).`}
-            />
+            <CategoryContextProvider>
+              <NavigationBar
+                logo={"" || "/img/grillo.svg"}
+                name={"Ecommerce"}
+                profile={"profile"}
+                cart={"cart"}
+              />
+              {children}
+              <Footer
+                fb={""}
+                ig={""}
+                wp={""}
+                info={`© 2024 VALENTIN LIBONATI. Teléfonos. Si sos Consultor y tenés alguna duda sobre tu venta presencial, podés llamar al: 0810-444-0505 (Int. del país) o 4-837-6000 (Capital y GBA).`}
+              />
+            </CategoryContextProvider>
           </AuthContextProvider>
         </div>
       </body>
