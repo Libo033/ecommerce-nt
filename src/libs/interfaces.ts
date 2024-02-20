@@ -28,6 +28,7 @@ export interface ICategory {
 }
 
 export interface ICategoryContext {
+  loaded: boolean;
   categories: ICategory[];
   createOne: (nombre: string) => Promise<boolean>;
   updateOne: (id: string, nombre: string) => Promise<boolean>;
