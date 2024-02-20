@@ -20,53 +20,65 @@ export const CategoryContextProvider: React.FC<{
   const [categories, setCategories] = useState<ICategory[]>(categoriesDefault);
 
   const createOne = async (nombre: string) => {
-    // AGREGAR TRY CATCH
-    const res = await fetch(`/api/category`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre }),
-    });
-    const data: { code: number; created: boolean; id: string } =
-      await res.json();
+    try {
+      const res = await fetch(`/api/category`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre }),
+      });
+      const data: { code: number; created: boolean; id: string } =
+        await res.json();
 
-    if (data.created) {
-      setCategories([...categories, { _id: data.id, nombre }]);
-      return true;
+      if (data.created) {
+        setCategories([...categories, { _id: data.id, nombre }]);
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+      return false;
     }
-
-    return false;
   };
 
   const updateOne = async (id: string, nombre: string) => {
-    // AGREGAR TRY CATCH
-    const res = await fetch(`/api/category/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre }),
-    });
-    const data: { code: number; modified: { _id: string; nombre: string } } =
-      await res.json();
+    try {
+      const res = await fetch(`/api/category/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre }),
+      });
+      const data: { code: number; modified: { _id: string; nombre: string } } =
+        await res.json();
 
-    if (data.code === 200) {
-      let toEdit = categories.filter((c) => c._id !== id);
-      setCategories([...toEdit, { _id: id, nombre }]);
+      if (data.code === 200) {
+        let toEdit = categories.filter((c) => c._id !== id);
+        setCategories([...toEdit, { _id: id, nombre }]);
 
-      return true;
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+      return false;
     }
-
-    return false;
   };
 
   const deleteOne = async (id: string) => {
-    // AGREGAR TRY CATCH
-    setCategories(categories.filter((c) => c._id !== id));
+    try {
+      setCategories(categories.filter((c) => c._id !== id));
 
-    const res = await fetch(`/api/category/${id}`, { method: "DELETE" });
-    const data: { code: number; deleted: boolean } = await res.json();
+      const res = await fetch(`/api/category/${id}`, { method: "DELETE" });
+      const data: { code: number; deleted: boolean } = await res.json();
 
-    if (data.deleted) return true;
+      if (data.deleted) return true;
 
-    return false;
+      return false;
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+      return false;
+    }
   };
 
   useEffect(() => {
