@@ -20,6 +20,7 @@ export const CategoryContextProvider: React.FC<{
   const [categories, setCategories] = useState<ICategory[]>(categoriesDefault);
 
   const createOne = async (nombre: string) => {
+    // AGREGAR TRY CATCH
     const res = await fetch(`/api/category`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -37,11 +38,27 @@ export const CategoryContextProvider: React.FC<{
   };
 
   const updateOne = async (id: string, nombre: string) => {
-    fetch(`/api/category/${id}`);
+    // AGREGAR TRY CATCH
+    const res = await fetch(`/api/category/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre }),
+    });
+    const data: { code: number; modified: { _id: string; nombre: string } } =
+      await res.json();
+
+    if (data.code === 200) {
+      let toEdit = categories.filter((c) => c._id !== id);
+      setCategories([...toEdit, { _id: id, nombre }]);
+
+      return true;
+    }
+
     return false;
   };
 
   const deleteOne = async (id: string) => {
+    // AGREGAR TRY CATCH
     setCategories(categories.filter((c) => c._id !== id));
 
     const res = await fetch(`/api/category/${id}`, { method: "DELETE" });

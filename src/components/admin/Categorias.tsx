@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import styles from "./page.module.css";
 import { AddCircleOutline, Delete, Edit } from "@mui/icons-material";
-import { Button, Modal, TextField } from "@mui/material";
+import { Alert, Button, Modal, TextField, Snackbar } from "@mui/material";
 import { CategoryContext } from "@/context/CategoryContext";
 
 const MiniCardCategoria: React.FC<{ nombre: string; id: string }> = ({
@@ -12,6 +12,7 @@ const MiniCardCategoria: React.FC<{ nombre: string; id: string }> = ({
   const { updateOne, deleteOne } = useContext(CategoryContext);
   const [inputName, setInputName] = useState<string>(nombre);
   const [modal, setModal] = useState<boolean>(false);
+  const [edited, setEdited] = useState<boolean>(false);
 
   const handleClose = () => {
     setModal(false);
@@ -20,8 +21,23 @@ const MiniCardCategoria: React.FC<{ nombre: string; id: string }> = ({
 
   const handleDeleteCategory = async () => {
     if (confirm(`Estas seguro que deseas borrar la categoria ${nombre}?`)) {
-      await deleteOne(id);
+      const deleted = await deleteOne(id);
     }
+  };
+
+  const handleEditCategory = async (id: string, name: string) => {
+    const edited = await updateOne(id, name);
+
+    if (edited) {
+      setEdited(true);
+      setTimeout(() => {
+        setEdited(false);
+      }, 3000);
+    } else {
+      alert("Error al editar categoria. Intentalo mas tarde.");
+    }
+    setModal(false);
+    setInputName("");
   };
 
   return (
@@ -59,7 +75,7 @@ const MiniCardCategoria: React.FC<{ nombre: string; id: string }> = ({
             required
           />
           <Button
-            onClick={async () => await updateOne(id, inputName)}
+            onClick={async () => await handleEditCategory(id, inputName)}
             fullWidth
             variant="contained"
           >
@@ -67,6 +83,11 @@ const MiniCardCategoria: React.FC<{ nombre: string; id: string }> = ({
           </Button>
         </form>
       </Modal>
+      <Snackbar open={edited}>
+        <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
+          Categoria editada exitosamente!
+        </Alert>
+      </Snackbar>
     </article>
   );
 };
@@ -74,7 +95,28 @@ const MiniCardCategoria: React.FC<{ nombre: string; id: string }> = ({
 const Categorias = () => {
   const { categories, createOne } = useContext(CategoryContext);
   const [inputName, setInputName] = useState<string>("");
+  const [created, setCreated] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
+
+  const handleClose = () => {
+    setModal(false);
+    setInputName("");
+  };
+
+  const handleCreateCategory = async (name: string) => {
+    const created = await createOne(name);
+
+    if (created) {
+      setCreated(true);
+      setTimeout(() => {
+        setCreated(false);
+      }, 3000);
+    } else {
+      alert("Error al crear categoria. Intentalo mas tarde.");
+    }
+    setModal(false);
+    setInputName("");
+  };
 
   return (
     <div className={styles.Categorias}>
@@ -87,11 +129,11 @@ const Categorias = () => {
             <MiniCardCategoria key={c._id} id={c._id} nombre={c.nombre} />
           ))}
       </section>
-      <Modal open={modal} onClose={() => setModal(false)}>
+      <Modal open={modal} onClose={handleClose}>
         <form className={styles.Modal}>
           <p className={styles.ModalTitle}>Crear categoria</p>
           <TextField
-            sx={{ margin: "9px 0px 21px 0px" }}
+            sx={{ margin: "15px 0px 21px 0px" }}
             fullWidth
             type="text"
             variant="outlined"
@@ -102,7 +144,7 @@ const Categorias = () => {
             required
           />
           <Button
-            onClick={async () => await createOne(inputName)}
+            onClick={async () => await handleCreateCategory(inputName)}
             fullWidth
             variant="contained"
           >
@@ -110,6 +152,11 @@ const Categorias = () => {
           </Button>
         </form>
       </Modal>
+      <Snackbar open={created}>
+        <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
+          Categoria creada exitosamente!
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
