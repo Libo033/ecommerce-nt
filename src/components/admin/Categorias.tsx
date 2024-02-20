@@ -2,7 +2,14 @@
 import React, { useContext, useState } from "react";
 import styles from "./page.module.css";
 import { AddCircleOutline, Delete, Edit } from "@mui/icons-material";
-import { Alert, Button, Modal, TextField, Snackbar } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Modal,
+  TextField,
+  Snackbar,
+  Skeleton,
+} from "@mui/material";
 import { CategoryContext } from "@/context/CategoryContext";
 
 const MiniCardCategoria: React.FC<{ nombre: string; id: string }> = ({
@@ -93,7 +100,7 @@ const MiniCardCategoria: React.FC<{ nombre: string; id: string }> = ({
 };
 
 const Categorias = () => {
-  const { categories, createOne } = useContext(CategoryContext);
+  const { loaded, categories, createOne } = useContext(CategoryContext);
   const [inputName, setInputName] = useState<string>("");
   const [created, setCreated] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
@@ -124,10 +131,32 @@ const Categorias = () => {
         <AddCircleOutline sx={{ fontSize: "small" }} /> Nueva Categoria
       </p>
       <section>
-        {categories.length > 0 &&
+        {categories.length > 0 && loaded ? (
           categories.map((c) => (
             <MiniCardCategoria key={c._id} id={c._id} nombre={c.nombre} />
-          ))}
+          ))
+        ) : (
+          <>
+            <Skeleton
+              variant="rounded"
+              sx={{ margin: "12px 0" }}
+              width={"100%"}
+              height={50}
+            />
+            <Skeleton
+              variant="rounded"
+              sx={{ margin: "12px 0" }}
+              width={"100%"}
+              height={50}
+            />
+            <Skeleton
+              variant="rounded"
+              sx={{ margin: "12px 0" }}
+              width={"100%"}
+              height={50}
+            />
+          </>
+        )}
       </section>
       <Modal open={modal} onClose={handleClose}>
         <form className={styles.Modal}>
