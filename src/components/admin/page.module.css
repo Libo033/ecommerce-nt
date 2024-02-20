@@ -28,11 +28,11 @@
   gap: 18px;
 }
 
-.Categorias {
+.Page {
   margin-top: 16px;
 }
 
-.Categorias_Nueva {
+.Nuevo {
   display: flex;
   align-items: center;
   gap: 6px;
