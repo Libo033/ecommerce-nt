@@ -126,8 +126,8 @@ const Categorias = () => {
   };
 
   return (
-    <div className={styles.Categorias}>
-      <p className={styles.Categorias_Nueva} onClick={() => setModal(true)}>
+    <div className={styles.Page}>
+      <p className={styles.Nuevo} onClick={() => setModal(true)}>
         <AddCircleOutline sx={{ fontSize: "small" }} /> Nueva Categoria
       </p>
       <section>

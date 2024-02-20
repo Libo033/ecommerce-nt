@@ -63,3 +63,149 @@
   font-size: x-large;
   font-weight: 600;
 }
+
+.ProductoAdminCard {
+  margin: 15px 0px;
+  border: 1px solid gainsboro;
+  border-radius: 12px;
+  display: flex;
+}
+
+.ProductoAdminCard_Img {
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+}
+
+.ProductoAdminCard_Img img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.ProductoAdminCard_Info {
+  margin: 12px;
+  display: flex;
+  flex-direction: column;
+
+  width: calc(100% - (180px + 300px));
+  justify-content: space-evenly;
+}
+
+.ProductoAdminCard_Marca {
+  font-size: medium;
+  font-weight: 700;
+  color: gray;
+}
+
+.ProductoAdminCard_Det {
+  font-size: 17px;
+  font-weight: 600;
+  text-align: left;
+  text-wrap: pretty;
+
+  height: 54px;
+}
+
+.ProductoAdminCard_Cat {
+  font-size: medium;
+  font-weight: 700;
+}
+
+.ProductoAdminCard_Gen {
+  margin-top: 6px;
+}
+
+.ProductoAdminCard_Stock {
+  margin-block: 6px;
+  text-align: center;
+  font-size: large;
+}
+
+.ProductoAdminCard_Vis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: gray;
+  font-weight: 600;
+  text-align: center;
+}
+
+.ProductoAdminCard_Precio {
+  margin-top: 9px;
+  font-size: larger;
+  font-weight: 700;
+  text-align: right;
+  text-wrap: pretty;
+  color: #3a734b;
+}
+
+.ProductoAdminCard_ButtonGroup {
+  border-top: 1px solid gainsboro;
+  display: flex;
+  gap: 9px;
+  padding: 9px;
+
+  width: 180px;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+@media (641px <= width <= 1007px) {
+  .ProductoAdminCard {
+    flex-direction: column;
+  }
+
+  .ProductoAdminCard_Img {
+    width: 100%;
+  }
+
+  .ProductoAdminCard_Img img {
+    width: 330px;
+  }
+
+  .ProductoAdminCard_Info {
+    width: calc(100% - 24px);
+  }
+
+  .ProductoAdminCard_Det {
+    height: 54px;
+  }
+
+  .ProductoAdminCard_ButtonGroup {
+    flex-direction: row;
+    width: 100%;
+  }
+}
+
+@media (width <= 640px) {
+  .ProductoAdminCard {
+    flex-direction: column;
+  }
+
+  .ProductoAdminCard_Img {
+    width: 100%;
+  }
+
+  .ProductoAdminCard_Img img {
+    width: 100%;
+  }
+
+  .ProductoAdminCard_Info {
+    width: calc(100% - 24px);
+  }
+
+  .ProductoAdminCard_Det {
+    height: 54px;
+  }
+
+  .ProductoAdminCard_ButtonGroup {
+    flex-direction: row;
+    width: 100%;
+  }
+}
