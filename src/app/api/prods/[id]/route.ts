@@ -8,7 +8,13 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    // GET ONE
+    const client: MongoClient = await clientPromise;
+    const db: Db = client.db("ecommerce");
+    const producto = await db
+      .collection("productos")
+      .findOne({ _id: new ObjectId(params.id) });
+
+    return Response.json({ code: 200, producto }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return Response.json({ code: 500, Error: error }, { status: 500 });
@@ -34,7 +40,36 @@ export async function PUT(
       const { isAdmin }: { isAdmin: boolean } = await res.json();
 
       if (isAdmin) {
-        // PUT
+        const client: MongoClient = await clientPromise;
+        const db: Db = client.db("ecommerce");
+        const data = await req.json();
+
+        const product_to_modified = {
+          marca: data.marca,
+          detalle: data.detalle,
+          img: data.img,
+          categoria: data.categoria,
+          precio: data.precio,
+          stock: data.stock,
+          mostrar: data.mostrar,
+          otros: data.otros,
+          genero: data.genero,
+        };
+
+        const modified_category = await db
+          .collection("productos")
+          .findOneAndUpdate(
+            { _id: new ObjectId(params.id) },
+            { $set: product_to_modified }
+          );
+
+        return Response.json(
+          {
+            code: 200,
+            modified: modified_category,
+          },
+          { status: 200 }
+        );
       } else {
         return Response.json(
           { code: 403, Error: "invalid_token" },
@@ -72,7 +107,20 @@ export async function DELETE(
       const { isAdmin }: { isAdmin: boolean } = await res.json();
 
       if (isAdmin) {
-        // DELETE
+        const client: MongoClient = await clientPromise;
+        const db: Db = client.db("ecommerce");
+
+        const deleted_product = await db
+          .collection("productos")
+          .deleteOne({ _id: new ObjectId(params.id) });
+
+        return Response.json(
+          {
+            code: 200,
+            deleted: deleted_product.acknowledged,
+          },
+          { status: 200 }
+        );
       } else {
         return Response.json(
           { code: 403, Error: "invalid_token" },
