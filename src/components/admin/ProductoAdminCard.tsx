@@ -25,6 +25,7 @@ const ProductoAdminCard: React.FC<IProductoAdminCard> = (props) => {
         <Image src={props.img[0]} alt="detalle" width={800} height={800} />
       </div>
       <div className={styles.ProductoAdminCard_Info}>
+        <p className={styles.ProductoAdminCard_Id}>ID: {props._id}</p>
         <p className={styles.ProductoAdminCard_Marca}>{props.marca}</p>
         <p className={styles.ProductoAdminCard_Det}>{props.detalle}</p>
         <p className={styles.ProductoAdminCard_Cat}>{props.categoria}</p>
