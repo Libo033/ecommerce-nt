@@ -1,14 +1,21 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./page.module.css";
 import { AddCircleOutline, Search } from "@mui/icons-material";
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, Modal, TextField } from "@mui/material";
 import ProductoAdminCard from "./ProductoAdminCard";
+import ProductForm from "./ProductForm";
 
 const Productos = () => {
+  const [modal, setModal] = useState<boolean>(false);
+
+  const handleClose = () => {
+    setModal(false);
+  };
+
   return (
     <div className={styles.Page}>
-      <p className={styles.Nuevo} /*onClick={() => setModal(true)}*/>
+      <p className={styles.Nuevo} onClick={() => setModal(true)}>
         <AddCircleOutline sx={{ fontSize: "small" }} /> Nuevo Producto
       </p>
       <div style={{ marginTop: "16px", width: "315px" }}>
@@ -43,6 +50,11 @@ const Productos = () => {
           genero={"femenino"}
         />
       </section>
+      <Modal open={modal} onClose={handleClose}>
+        <>
+          <ProductForm id={null} />
+        </>
+      </Modal>
     </div>
   );
 };

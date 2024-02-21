@@ -62,8 +62,10 @@
 .ModalTitle {
   font-size: x-large;
   font-weight: 600;
+  margin-bottom: 18px;
 }
 
+/*#region PRODUCTO ADMIN CARD */
 .ProductoAdminCard {
   margin: 15px 0px;
   border: 1px solid gainsboro;
@@ -156,6 +158,28 @@
   width: 180px;
   flex-direction: column;
   justify-content: flex-end;
+}
+/*#endregion */
+
+.ModalProduct {
+  position: absolute;
+  width: 90%;
+  max-width: 900px;
+  height: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 18px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ModalDoble {
+  width: 100%;
+  display: flex;
+  gap: 15px;
 }
 
 @media (641px <= width <= 1007px) {
