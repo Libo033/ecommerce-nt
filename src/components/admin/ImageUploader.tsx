@@ -5,10 +5,12 @@ import Image from "next/image";
 import { Add, Close, FileOpen } from "@mui/icons-material";
 import {
   Button,
+  CircularProgress,
   OutlinedTextFieldProps,
   SxProps,
   TextField,
 } from "@mui/material";
+import { handleUploadURL } from "@/libs/handleUploadImage";
 
 interface IImageUploader {
   img: string[];
@@ -17,7 +19,8 @@ interface IImageUploader {
 }
 
 const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
-  const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [url, setUrl] = useState<string>("");
 
   const closeProps: SxProps = {
     position: "absolute",
@@ -28,8 +31,17 @@ const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
     cursor: "pointer",
   };
 
-  const handleAddImage = () => {
-    console.log("Nueva Imagen");
+  const handleAddImage = async () => {
+    try {
+      setLoading(true);
+      const res = await handleUploadURL(url);
+      setImg([...img, res.secure_url]);
+      setUrl("");
+    } catch (error) {
+      console.log(error);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -52,7 +64,7 @@ const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
           onClick={() => handleAddImage()}
           variant="outlined"
         >
-          <Add />
+          {loading ? <CircularProgress size={18} /> : <Add />}
         </Button>
       </div>
       <div className={styles.ModalUploaderImages}>

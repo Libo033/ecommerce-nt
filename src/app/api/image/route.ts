@@ -23,8 +23,6 @@ export async function POST(
       if (isAdmin) {
         const body = await req.json();
 
-        console.log(body.url);
-
         const data: UploadApiResponse = await cloudinary.uploader.upload(
           body.url,
           { upload_preset: "05-ecommerce" }
