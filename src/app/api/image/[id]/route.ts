@@ -1,7 +1,9 @@
 import { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
+import { UploadApiResponse } from "cloudinary";
+import cloudinary from "@/libs/cloudinary";
 
-export async function POST(
+export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
@@ -19,9 +21,17 @@ export async function POST(
       const { isAdmin }: { isAdmin: boolean } = await res.json();
 
       if (isAdmin) {
+        const data: UploadApiResponse = await cloudinary.uploader.destroy(
+          "05-ecommerce/" + params.id,
+          {
+            resource_type: "image",
+          }
+        );
+
         return Response.json(
           {
             code: 200,
+            data,
           },
           { status: 200 }
         );

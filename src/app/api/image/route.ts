@@ -3,7 +3,7 @@ import { jwtVerify } from "jose";
 import { UploadApiResponse } from "cloudinary";
 import cloudinary from "@/libs/cloudinary";
 
-export async function DELETE(
+export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
@@ -21,11 +21,13 @@ export async function DELETE(
       const { isAdmin }: { isAdmin: boolean } = await res.json();
 
       if (isAdmin) {
-        const data: UploadApiResponse = await cloudinary.uploader.destroy(
-          "00-start/" + params.id,
-          {
-            resource_type: "image",
-          }
+        const body = await req.json();
+
+        console.log(body.url);
+
+        const data: UploadApiResponse = await cloudinary.uploader.upload(
+          body.url,
+          { upload_preset: "05-ecommerce" }
         );
 
         return Response.json(
@@ -48,8 +50,6 @@ export async function DELETE(
       { status: 401 }
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return Response.json({ code: 500, Error: error }, { status: 500 });
-    }
+    return Response.json({ code: 500, Error: error }, { status: 500 });
   }
 }
