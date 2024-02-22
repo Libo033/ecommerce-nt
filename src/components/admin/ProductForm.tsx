@@ -27,9 +27,7 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
   const [categoria, setCategoria] = useState<string>("");
   const [genero, setGenero] = useState<string>("Sin");
   const [mostrar, setMostrar] = useState<boolean>(true);
-  const [img, setImg] = useState<string[]>([
-    "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
-  ]);
+  const [img, setImg] = useState<string[]>([]);
   const [otros, setOtros] = useState<string[]>([]);
 
   const handleAddOtros = () => {
@@ -40,6 +38,8 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
   const handleDeleteOtros = (otro: string) => {
     setOtros(otros.filter((o) => o !== otro));
   };
+
+  const handleAddImage = () => {};
 
   const textFieldProps: Partial<OutlinedTextFieldProps> = {
     type: "text",
