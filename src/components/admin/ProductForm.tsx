@@ -11,6 +11,8 @@ import {
   TextField,
   Checkbox,
   Chip,
+  SxProps,
+  OutlinedTextFieldProps,
 } from "@mui/material";
 import { CategoryContext } from "@/context/CategoryContext";
 import { Add, Close, FileOpen } from "@mui/icons-material";
@@ -39,6 +41,21 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
     setOtros(otros.filter((o) => o !== otro));
   };
 
+  const textFieldProps: Partial<OutlinedTextFieldProps> = {
+    type: "text",
+    autoComplete: "off",
+    size: "small",
+  };
+
+  const closeProps: SxProps = {
+    position: "absolute",
+    zIndex: "99",
+    top: "6px",
+    right: "6px",
+    fontSize: "21px",
+    cursor: "pointer",
+  };
+
   return (
     <form className={styles.ModalProduct}>
       <p className={styles.ModalTitle}>
@@ -46,36 +63,27 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
       </p>
       {id && (
         <TextField
-          sx={{ margin: "9px 0px 9px 0px" }}
-          type="text"
-          variant="outlined"
+          sx={{ margin: "9px 0px" }}
+          {...textFieldProps}
           label="ID"
-          autoComplete="off"
-          size="small"
           disabled
         />
       )}
       <div className={styles.ModalDoble}>
         <TextField
-          size="small"
-          sx={{ margin: "9px 0px 9px 0px", width: "50%" }}
-          type="text"
-          variant="outlined"
+          {...textFieldProps}
+          sx={{ margin: "9px 0px", width: "50%" }}
           label="Marca"
-          autoComplete="off"
         />
-        <FormControl
-          size="small"
-          style={{ margin: "9px 0px 9px 0px", width: "50%" }}
-        >
-          <InputLabel size="small" id="demo-simple-select-label">
+        <FormControl size="small" style={{ margin: "9px 0px", width: "50%" }}>
+          <InputLabel size="small" id="cat-select-label">
             Categoria
           </InputLabel>
           <Select
             size="small"
             fullWidth
-            id="demo-simple-select"
-            labelId="demo-simple-select-label"
+            id="cat-select"
+            labelId="cat-select-label"
             label="Categoria"
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
@@ -90,32 +98,23 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
         </FormControl>
       </div>
       <TextField
-        sx={{ margin: "9px 0px 9px 0px" }}
-        size="small"
-        type="text"
-        variant="outlined"
+        {...textFieldProps}
+        sx={{ margin: "9px 0px" }}
         label="Detalle"
-        autoComplete="off"
       />
       <div className={styles.ModalUploader}>
         <div className={styles.ModalInputsUploader}>
           <TextField
             fullWidth
-            sx={{ margin: "9px 0px 9px 0px" }}
-            type="text"
-            variant="outlined"
+            sx={{ margin: "9px 0px" }}
+            {...textFieldProps}
             label="URL"
-            size="small"
-            autoComplete="off"
           />
           <label htmlFor="file" className={styles.ModalFileLabel}>
             <FileOpen sx={{ fontSize: "21px" }} />
           </label>
           <input type="file" id="file" style={{ display: "none" }} />
-          <Button
-            sx={{ height: "40px", margin: "9px 0px 9px 0px" }}
-            variant="outlined"
-          >
+          <Button sx={{ height: "40px", margin: "9px 0px" }} variant="outlined">
             <Add />
           </Button>
         </div>
@@ -124,16 +123,7 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
             img.map((i) => (
               <div key={i} style={{ position: "relative" }}>
                 <Image src={i} alt="producto" width={400} height={400} />
-                <Close
-                  sx={{
-                    position: "absolute",
-                    zIndex: "99",
-                    top: "6px",
-                    right: "6px",
-                    fontSize: "21px",
-                    cursor: "pointer",
-                  }}
-                />
+                <Close sx={closeProps} />
               </div>
             ))}
         </div>
@@ -141,21 +131,15 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
       <div className={styles.ModalDoble}>
         <TextField
           fullWidth
-          sx={{ margin: "9px 0px 9px 0px" }}
-          type="text"
-          variant="outlined"
+          sx={{ margin: "9px 0px" }}
+          {...textFieldProps}
           label="Precio"
-          autoComplete="off"
-          size="small"
         />
         <TextField
           fullWidth
-          sx={{ margin: "9px 0px 9px 0px" }}
-          type="text"
-          variant="outlined"
+          sx={{ margin: "9px 0px" }}
+          {...textFieldProps}
           label="Stock"
-          autoComplete="off"
-          size="small"
         />
       </div>
       <div className={styles.ModalDoble}>
@@ -171,18 +155,15 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
           }
           label="Visible"
         />
-        <FormControl
-          size="small"
-          style={{ margin: "9px 0px 9px 0px", width: "50%" }}
-        >
-          <InputLabel size="small" id="demo-simple-select-label">
+        <FormControl size="small" style={{ margin: "9px 0px", width: "50%" }}>
+          <InputLabel size="small" id="gen-select-label">
             Genero
           </InputLabel>
           <Select
             size="small"
             fullWidth
-            id="demo-simple-select"
-            labelId="demo-simple-select-label"
+            id="gen-select"
+            labelId="gen-select-label"
             label="Genero"
             value={genero}
             onChange={(e) => setGenero(e.target.value)}
@@ -197,16 +178,13 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
         <TextField
           id="otros"
           fullWidth
-          size="small"
-          sx={{ margin: "9px 0px 9px 0px" }}
-          type="text"
-          variant="outlined"
+          sx={{ margin: "9px 0px" }}
+          {...textFieldProps}
           label="Otros"
-          autoComplete="off"
         />
         <Button
           onClick={() => handleAddOtros()}
-          sx={{ margin: "9px 0px 9px 0px" }}
+          sx={{ margin: "9px 0px" }}
           variant="outlined"
           size="small"
         >
@@ -240,14 +218,3 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
 };
 
 export default ProductForm;
-
-/*
-interface IProductoAdminCard {
-  marca: string; categoria: string;
-  detalle: string;
-  img: string[];
-  precio: number;   stock: number;
-  mostrar: boolean;   genero: "femenino" | "masculino" | "sin";
-  otros: string[];
-}
-*/
