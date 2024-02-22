@@ -10,7 +10,7 @@ import {
   SxProps,
   TextField,
 } from "@mui/material";
-import { handleUploadURL } from "@/libs/handleUploadImage";
+import { handleDelete, handleUploadURL } from "@/libs/handleUploadImage";
 
 interface IImageUploader {
   img: string[];
@@ -44,6 +44,15 @@ const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
     setLoading(false);
   };
 
+  const handleDeleteImg = async (image: string) => {
+    try {
+      const res = await handleDelete(image);
+      if (res.result === "ok") setImg(img.filter((i) => i !== image));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className={styles.ModalUploader}>
       <div className={styles.ModalInputsUploader}>
@@ -72,7 +81,7 @@ const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
           img.map((i) => (
             <div key={i} style={{ position: "relative" }}>
               <Image src={i} alt="producto" width={400} height={400} />
-              <Close sx={closeProps} />
+              <Close sx={closeProps} onClick={() => handleDeleteImg(i)} />
             </div>
           ))}
       </div>

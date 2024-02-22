@@ -30,10 +30,10 @@ export async function POST(
 
         return Response.json(
           {
-            code: 200,
+            code: 201,
             data,
           },
-          { status: 200 }
+          { status: 201 }
         );
       } else {
         return Response.json(
