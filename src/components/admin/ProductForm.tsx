@@ -11,12 +11,11 @@ import {
   TextField,
   Checkbox,
   Chip,
-  SxProps,
   OutlinedTextFieldProps,
 } from "@mui/material";
 import { CategoryContext } from "@/context/CategoryContext";
-import { Add, Close, FileOpen } from "@mui/icons-material";
-import Image from "next/image";
+import { Add, Close } from "@mui/icons-material";
+import ImageUploader from "./ImageUploader";
 
 interface IProductForm {
   id: string | null;
@@ -45,15 +44,6 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
     type: "text",
     autoComplete: "off",
     size: "small",
-  };
-
-  const closeProps: SxProps = {
-    position: "absolute",
-    zIndex: "99",
-    top: "6px",
-    right: "6px",
-    fontSize: "21px",
-    cursor: "pointer",
   };
 
   return (
@@ -102,32 +92,7 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
         sx={{ margin: "9px 0px" }}
         label="Detalle"
       />
-      <div className={styles.ModalUploader}>
-        <div className={styles.ModalInputsUploader}>
-          <TextField
-            fullWidth
-            sx={{ margin: "9px 0px" }}
-            {...textFieldProps}
-            label="URL"
-          />
-          <label htmlFor="file" className={styles.ModalFileLabel}>
-            <FileOpen sx={{ fontSize: "21px" }} />
-          </label>
-          <input type="file" id="file" style={{ display: "none" }} />
-          <Button sx={{ height: "40px", margin: "9px 0px" }} variant="outlined">
-            <Add />
-          </Button>
-        </div>
-        <div className={styles.ModalUploaderImages}>
-          {img.length > 0 &&
-            img.map((i) => (
-              <div key={i} style={{ position: "relative" }}>
-                <Image src={i} alt="producto" width={400} height={400} />
-                <Close sx={closeProps} />
-              </div>
-            ))}
-        </div>
-      </div>
+      <ImageUploader img={img} setImg={setImg} txtProps={textFieldProps} />
       <div className={styles.ModalDoble}>
         <TextField
           fullWidth
