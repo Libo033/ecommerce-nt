@@ -13,6 +13,7 @@ import {
 import {
   handleDelete,
   handleFileReader,
+  handleUploadPC,
   handleUploadURL,
 } from "@/libs/handleUploadImage";
 
@@ -25,6 +26,7 @@ interface IImageUploader {
 const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [url, setUrl] = useState<string>("");
+  const [uri, setUri] = useState<string>("");
 
   const closeProps: SxProps = {
     position: "absolute",
@@ -37,14 +39,21 @@ const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
 
   const handleAddImage = async () => {
     try {
+      const fileInput = document.getElementById("file") as HTMLInputElement;
       setLoading(true);
-      const res = await handleUploadURL(url);
-      setImg([...img, res.secure_url]);
-      setUrl("");
+      if (fileInput.files?.length === 0) {
+        // SUBIR URL
+        const res = await handleUploadURL(url);
+        setImg([...img, res.secure_url]);
+      } else {
+        // SUBIR ARCHIVO
+        const secure_url = await handleUploadPC(fileInput);
+        setImg([...img, secure_url]);
+      }
     } catch (error) {
       console.log(error);
     }
-
+    setUrl("");
     setLoading(false);
   };
 
@@ -63,6 +72,7 @@ const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
       setUrl(data);
     } catch (error) {
       console.log(error);
+      setUrl("");
     }
   };
 
