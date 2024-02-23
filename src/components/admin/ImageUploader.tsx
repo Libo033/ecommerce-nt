@@ -1,5 +1,5 @@
 "use client";
-import React, { SetStateAction, useState } from "react";
+import React, { ChangeEvent, SetStateAction, useState } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { Add, Close, FileOpen } from "@mui/icons-material";
@@ -10,7 +10,11 @@ import {
   SxProps,
   TextField,
 } from "@mui/material";
-import { handleDelete, handleUploadURL } from "@/libs/handleUploadImage";
+import {
+  handleDelete,
+  handleFileReader,
+  handleUploadURL,
+} from "@/libs/handleUploadImage";
 
 interface IImageUploader {
   img: string[];
@@ -53,6 +57,15 @@ const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
     }
   };
 
+  const fileReader = (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      const data = handleFileReader(e);
+      setUrl(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className={styles.ModalUploader}>
       <div className={styles.ModalInputsUploader}>
@@ -67,7 +80,12 @@ const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
         <label htmlFor="file" className={styles.ModalFileLabel}>
           <FileOpen sx={{ fontSize: "21px" }} />
         </label>
-        <input type="file" id="file" style={{ display: "none" }} />
+        <input
+          type="file"
+          id="file"
+          onChange={(e: ChangeEvent<HTMLInputElement>) => fileReader(e)}
+          style={{ display: "none" }}
+        />
         <Button
           sx={{ height: "40px", margin: "9px 0px" }}
           onClick={() => handleAddImage()}
