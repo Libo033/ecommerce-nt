@@ -102,7 +102,6 @@ export const ProductContextProvider: React.FC<{
     fetch(`/api/prods`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setProducts(data.productos);
         setLoaded(true);
       })

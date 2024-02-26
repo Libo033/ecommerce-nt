@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import styles from "./page.module.css";
 import { AddCircleOutline, Search } from "@mui/icons-material";
-import { InputAdornment, Modal, TextField } from "@mui/material";
+import { InputAdornment, Modal, Skeleton, TextField } from "@mui/material";
 import ProductoAdminCard from "./ProductoAdminCard";
 import ProductForm from "./ProductForm";
 import { ProductContext } from "@/context/ProductsContext";
@@ -37,9 +37,45 @@ const Productos = () => {
         />
       </div>
       <section>
-        {loaded &&
-          products.length > 0 &&
-          products.map((p) => <ProductoAdminCard key={p._id} {...p} />)}
+        {loaded ? (
+          products.length > 0 ? (
+            products.map((p) => <ProductoAdminCard key={p._id} {...p} />)
+          ) : (
+            <>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "larger",
+                  color: "gray",
+                  marginTop: "64px",
+                }}
+              >
+                No hay productos
+              </p>
+            </>
+          )
+        ) : (
+          <>
+            <Skeleton
+              sx={{ margin: "15px 0" }}
+              variant="rounded"
+              width={"100%"}
+              height={270}
+            />
+            <Skeleton
+              sx={{ margin: "15px 0" }}
+              variant="rounded"
+              width={"100%"}
+              height={270}
+            />
+            <Skeleton
+              sx={{ margin: "15px 0" }}
+              variant="rounded"
+              width={"100%"}
+              height={270}
+            />
+          </>
+        )}
       </section>
       <Modal open={modal} onClose={handleClose}>
         <>
