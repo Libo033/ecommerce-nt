@@ -16,6 +16,7 @@ import {
 import { CategoryContext } from "@/context/CategoryContext";
 import { Add, Close } from "@mui/icons-material";
 import ImageUploader from "./ImageUploader";
+import Otros from "./Otros";
 
 interface IProductForm {
   id: string | null;
@@ -28,15 +29,6 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
   const [mostrar, setMostrar] = useState<boolean>(true);
   const [img, setImg] = useState<string[]>([]);
   const [otros, setOtros] = useState<string[]>([]);
-
-  const handleAddOtros = () => {
-    const n = (document.getElementById("otros") as HTMLInputElement).value;
-    setOtros([...otros, n]);
-  };
-
-  const handleDeleteOtros = (otro: string) => {
-    setOtros(otros.filter((o) => o !== otro));
-  };
 
   const textFieldProps: Partial<OutlinedTextFieldProps> = {
     type: "text",
@@ -137,42 +129,11 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
           </Select>
         </FormControl>
       </div>
-      <div className={styles.ModalProduct_Otros}>
-        <TextField
-          id="otros"
-          fullWidth
-          sx={{ margin: "9px 0px" }}
-          {...textFieldProps}
-          label="Otros"
-        />
-        <Button
-          onClick={() => handleAddOtros()}
-          sx={{ margin: "9px 0px" }}
-          variant="outlined"
-          size="small"
-        >
-          <Add />
-        </Button>
-      </div>
-      <div className={styles.ModalBadgeContainer}>
-        {otros.length > 0 &&
-          otros.map((o) => (
-            <Chip
-              key={o}
-              label={
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "6px" }}
-                >
-                  <p>{o}</p>
-                  <Close
-                    onClick={() => handleDeleteOtros(o)}
-                    sx={{ fontSize: "17px", cursor: "pointer" }}
-                  />
-                </div>
-              }
-            />
-          ))}
-      </div>
+      <Otros
+        otros={otros}
+        setOtros={setOtros}
+        textFieldProps={textFieldProps}
+      />
       <Button type="submit" fullWidth variant="contained">
         {id ? "Editar" : "Crear"}
       </Button>
