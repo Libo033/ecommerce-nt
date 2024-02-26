@@ -10,11 +10,9 @@ import {
   Select,
   TextField,
   Checkbox,
-  Chip,
   OutlinedTextFieldProps,
 } from "@mui/material";
 import { CategoryContext } from "@/context/CategoryContext";
-import { Add, Close } from "@mui/icons-material";
 import ImageUploader from "./ImageUploader";
 import Otros from "./Otros";
 

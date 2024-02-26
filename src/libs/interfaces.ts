@@ -34,3 +34,24 @@ export interface ICategoryContext {
   updateOne: (id: string, nombre: string) => Promise<boolean>;
   deleteOne: (id: string) => Promise<boolean>;
 }
+
+export interface IProduct {
+  _id: string;
+  marca: string;
+  categoria: string;
+  detalle: string;
+  image: string[];
+  precio: number;
+  stock: number;
+  visible: boolean;
+  genero: "masculino" | "femenino" | "sin";
+  otros: string[];
+}
+
+export interface IProductContext {
+  loaded: boolean;
+  products: IProduct[];
+  createOneProduct: (newProduct: IProduct) => Promise<boolean>;
+  updateOneProduct: (toUpdate: IProduct) => Promise<boolean>;
+  deleteOneProduct: (id: string) => Promise<boolean>;
+}
