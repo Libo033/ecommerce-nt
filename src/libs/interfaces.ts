@@ -40,11 +40,11 @@ export interface IProduct {
   marca: string;
   categoria: string;
   detalle: string;
-  image: string[];
+  img: string[];
   precio: number;
   stock: number;
-  visible: boolean;
-  genero: "masculino" | "femenino" | "sin";
+  mostrar: boolean;
+  genero: string;
   otros: string[];
 }
 

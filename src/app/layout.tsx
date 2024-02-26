@@ -5,6 +5,7 @@ import NavigationBar from "@/components/navigation/NavigationBar";
 import Footer from "@/components/navigation/Footer";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { CategoryContextProvider } from "@/context/CategoryContext";
+import { ProductContextProvider } from "@/context/ProductsContext";
 
 const titi = Open_Sans({
   subsets: ["latin"],
@@ -27,7 +28,7 @@ export default function RootLayout({
         <div className="page">
           <AuthContextProvider>
             <CategoryContextProvider>
-              <CategoryContextProvider>
+              <ProductContextProvider>
                 <NavigationBar
                   logo={"" || "/img/grillo.svg"}
                   name={"Ecommerce"}
@@ -41,7 +42,7 @@ export default function RootLayout({
                   wp={""}
                   info={`© 2024 VALENTIN LIBONATI. Teléfonos. Si sos Consultor y tenés alguna duda sobre tu venta presencial, podés llamar al: 0810-444-0505 (Int. del país) o 4-837-6000 (Capital y GBA).`}
                 />
-              </CategoryContextProvider>
+              </ProductContextProvider>
             </CategoryContextProvider>
           </AuthContextProvider>
         </div>

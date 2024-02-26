@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useContext, useState } from "react";
+import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
 import styles from "./page.module.css";
 import {
   Button,
@@ -15,15 +15,19 @@ import {
 import { CategoryContext } from "@/context/CategoryContext";
 import ImageUploader from "./ImageUploader";
 import Otros from "./Otros";
+import { ProductContext } from "@/context/ProductsContext";
+import { IProduct } from "@/libs/interfaces";
 
 interface IProductForm {
   id: string | null;
+  handleClose: () => void;
 }
 
-const ProductForm: React.FC<IProductForm> = ({ id }) => {
+const ProductForm: React.FC<IProductForm> = ({ id, handleClose }) => {
+  const { createOneProduct } = useContext(ProductContext);
   const { categories, loaded } = useContext(CategoryContext);
   const [categoria, setCategoria] = useState<string>("");
-  const [genero, setGenero] = useState<string>("Sin");
+  const [genero, setGenero] = useState<string>("sin");
   const [mostrar, setMostrar] = useState<boolean>(true);
   const [img, setImg] = useState<string[]>([]);
   const [otros, setOtros] = useState<string[]>([]);
@@ -34,8 +38,36 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
     size: "small",
   };
 
+  const handleNewProduct = async (e: FormEvent) => {
+    e.preventDefault();
+
+    let d = document;
+
+    let newProduct: IProduct = {
+      _id: "",
+      marca: (d.getElementById("marca") as HTMLInputElement).value,
+      categoria,
+      genero,
+      mostrar,
+      img,
+      otros,
+      detalle: (d.getElementById("detalle") as HTMLInputElement).value,
+      precio: parseFloat(
+        (d.getElementById("precio") as HTMLInputElement).value
+      ),
+      stock: parseInt((d.getElementById("stock") as HTMLInputElement).value),
+    };
+
+    const creado = await createOneProduct(newProduct);
+
+    if (creado) handleClose();
+  };
+
   return (
-    <form className={styles.ModalProduct}>
+    <form
+      className={styles.ModalProduct}
+      onSubmit={(e: FormEvent) => handleNewProduct(e)}
+    >
       <p className={styles.ModalTitle}>
         {id ? "Editar producto" : "Crear producto"}
       </p>
@@ -52,6 +84,7 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
           {...textFieldProps}
           sx={{ margin: "9px 0px", width: "50%" }}
           label="Marca"
+          id="marca"
         />
         <FormControl size="small" style={{ margin: "9px 0px", width: "50%" }}>
           <InputLabel size="small" id="cat-select-label">
@@ -68,7 +101,7 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
           >
             {loaded &&
               categories.map((c) => (
-                <MenuItem key={c._id} value={c._id}>
+                <MenuItem key={c._id} value={c.nombre}>
                   {c.nombre}
                 </MenuItem>
               ))}
@@ -79,6 +112,7 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
         {...textFieldProps}
         sx={{ margin: "9px 0px" }}
         label="Detalle"
+        id="detalle"
       />
       <ImageUploader img={img} setImg={setImg} txtProps={textFieldProps} />
       <div className={styles.ModalDoble}>
@@ -87,12 +121,16 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
           sx={{ margin: "9px 0px" }}
           {...textFieldProps}
           label="Precio"
+          id="precio"
+          type="number"
         />
         <TextField
           fullWidth
           sx={{ margin: "9px 0px" }}
           {...textFieldProps}
           label="Stock"
+          id="stock"
+          type="number"
         />
       </div>
       <div className={styles.ModalDoble}>
@@ -121,9 +159,9 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
             value={genero}
             onChange={(e) => setGenero(e.target.value)}
           >
-            <MenuItem value="Masculino">Masculino</MenuItem>
-            <MenuItem value="Femenino">Femenino</MenuItem>
-            <MenuItem value="Sin">Sin</MenuItem>
+            <MenuItem value="masculino">Masculino</MenuItem>
+            <MenuItem value="femenino">Femenino</MenuItem>
+            <MenuItem value="sin">Sin</MenuItem>
           </Select>
         </FormControl>
       </div>

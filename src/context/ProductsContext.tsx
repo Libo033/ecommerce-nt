@@ -8,12 +8,12 @@ const productsDefault: IProduct[] = [
     marca: "Jota",
     categoria: "Perfumeria",
     detalle: "Jota rojo carmesi",
-    image: [
+    img: [
       "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
     ],
     precio: 32000,
     stock: 2,
-    visible: true,
+    mostrar: true,
     genero: "sin",
     otros: ["citrico"],
   },
@@ -30,7 +30,7 @@ const defaultValue: IProductContext = {
 export const ProductContext: React.Context<IProductContext> =
   createContext(defaultValue);
 
-export const CategoryContextProvider: React.FC<{
+export const ProductContextProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   const [products, setProducts] = useState<IProduct[]>(productsDefault);
@@ -61,7 +61,7 @@ export const CategoryContextProvider: React.FC<{
 
   const updateOneProduct = async (toUpdate: IProduct) => {
     try {
-      const res = await fetch(`/api/category/${toUpdate._id}`, {
+      const res = await fetch(`/api/prods/${toUpdate._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(toUpdate),
@@ -104,6 +104,7 @@ export const CategoryContextProvider: React.FC<{
       .then((data) => {
         console.log(data);
         setProducts(data.productos);
+        setLoaded(true);
       })
       .catch((err) => {
         if (err instanceof Error) {

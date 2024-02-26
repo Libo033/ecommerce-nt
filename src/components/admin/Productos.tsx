@@ -52,7 +52,7 @@ const Productos = () => {
       </section>
       <Modal open={modal} onClose={handleClose}>
         <>
-          <ProductForm id={null} />
+          <ProductForm id={null} handleClose={handleClose} />
         </>
       </Modal>
     </div>
