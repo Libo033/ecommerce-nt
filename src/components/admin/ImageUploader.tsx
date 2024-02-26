@@ -26,7 +26,6 @@ interface IImageUploader {
 const ImageUploader: React.FC<IImageUploader> = ({ img, setImg, txtProps }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [url, setUrl] = useState<string>("");
-  const [uri, setUri] = useState<string>("");
 
   const closeProps: SxProps = {
     position: "absolute",

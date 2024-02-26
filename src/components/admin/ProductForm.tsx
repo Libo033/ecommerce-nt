@@ -38,8 +38,6 @@ const ProductForm: React.FC<IProductForm> = ({ id }) => {
     setOtros(otros.filter((o) => o !== otro));
   };
 
-  const handleAddImage = () => {};
-
   const textFieldProps: Partial<OutlinedTextFieldProps> = {
     type: "text",
     autoComplete: "off",
