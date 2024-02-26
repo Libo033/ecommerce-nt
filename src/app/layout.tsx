@@ -27,19 +27,21 @@ export default function RootLayout({
         <div className="page">
           <AuthContextProvider>
             <CategoryContextProvider>
-              <NavigationBar
-                logo={"" || "/img/grillo.svg"}
-                name={"Ecommerce"}
-                profile={"profile"}
-                cart={"cart"}
-              />
-              {children}
-              <Footer
-                fb={""}
-                ig={""}
-                wp={""}
-                info={`© 2024 VALENTIN LIBONATI. Teléfonos. Si sos Consultor y tenés alguna duda sobre tu venta presencial, podés llamar al: 0810-444-0505 (Int. del país) o 4-837-6000 (Capital y GBA).`}
-              />
+              <CategoryContextProvider>
+                <NavigationBar
+                  logo={"" || "/img/grillo.svg"}
+                  name={"Ecommerce"}
+                  profile={"profile"}
+                  cart={"cart"}
+                />
+                {children}
+                <Footer
+                  fb={""}
+                  ig={""}
+                  wp={""}
+                  info={`© 2024 VALENTIN LIBONATI. Teléfonos. Si sos Consultor y tenés alguna duda sobre tu venta presencial, podés llamar al: 0810-444-0505 (Int. del país) o 4-837-6000 (Capital y GBA).`}
+                />
+              </CategoryContextProvider>
             </CategoryContextProvider>
           </AuthContextProvider>
         </div>

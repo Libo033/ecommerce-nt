@@ -37,16 +37,80 @@ export const CategoryContextProvider: React.FC<{
   const [loaded, setLoaded] = useState(false);
 
   const createOneProduct = async (newProduct: IProduct) => {
-    return false;
+    try {
+      const res = await fetch(`/api/prods`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProduct),
+      });
+      const data: { code: number; created: boolean; id: string } =
+        await res.json();
+
+      if (data.created) {
+        newProduct._id = data.id;
+        setProducts([...products, newProduct]);
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+      return false;
+    }
   };
 
   const updateOneProduct = async (toUpdate: IProduct) => {
-    return false;
+    try {
+      const res = await fetch(`/api/category/${toUpdate._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(toUpdate),
+      });
+      const data: { code: number; modified: IProduct } = await res.json();
+
+      if (data.code === 200) {
+        let toEdit = products.filter((c) => c._id !== toUpdate._id);
+        setProducts([...toEdit, toUpdate]);
+
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+      return false;
+    }
   };
 
   const deleteOneProduct = async (id: string) => {
-    return false;
+    try {
+      setProducts(products.filter((p) => p._id !== id));
+
+      const res = await fetch(`/api/prods/${id}`, { method: "DELETE" });
+      const data: { code: number; deleted: boolean } = await res.json();
+
+      if (data.deleted) return true;
+
+      return false;
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+      return false;
+    }
   };
+
+  useEffect(() => {
+    fetch(`/api/prods`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setProducts(data.productos);
+      })
+      .catch((err) => {
+        if (err instanceof Error) {
+          console.log(err.message);
+        }
+      });
+  }, []);
 
   return (
     <ProductContext.Provider
