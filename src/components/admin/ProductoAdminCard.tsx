@@ -5,6 +5,10 @@ import styles from "./page.module.css";
 import { Button } from "@mui/material";
 import { Delete, Edit, Visibility, VisibilityOff } from "@mui/icons-material";
 import { ProductContext } from "@/context/ProductsContext";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/autoplay";
 
 interface IProductoAdminCard {
   _id: string;
@@ -24,8 +28,21 @@ const ProductoAdminCard: React.FC<IProductoAdminCard> = (props) => {
   return (
     <article className={styles.ProductoAdminCard}>
       <div className={styles.ProductoAdminCard_Img}>
-        {/*Agregar swiper para las imagenes*/}
-        <Image src={props.img[0]} alt="detalle" width={800} height={800} />
+        <Swiper slidesPerView={1} loop={true}>
+          {props.img.map((i) => (
+            <SwiperSlide
+              key={i}
+              style={{
+                height: "270px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Image src={i} alt="detalle" width={800} height={800} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
       <div className={styles.ProductoAdminCard_Info}>
         <p className={styles.ProductoAdminCard_Id}>ID: {props._id}</p>
