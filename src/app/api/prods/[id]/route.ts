@@ -2,6 +2,8 @@ import clientPromise from "@/libs/mongodb";
 import { Db, MongoClient, ObjectId } from "mongodb";
 import { jwtVerify } from "jose";
 import { NextRequest } from "next/server";
+import { handleDelete } from "@/libs/handleUploadImage";
+import cloudinary from "@/libs/cloudinary";
 
 export async function GET(
   req: Request,
@@ -110,11 +112,27 @@ export async function DELETE(
         const client: MongoClient = await clientPromise;
         const db: Db = client.db("ecommerce");
 
+        const prod = await db
+          .collection("productos")
+          .findOne({ _id: new ObjectId(params.id) });
+
+        if (prod) {
+          prod.img.forEach((i: string) => {
+            const public_id: string = i.slice(
+              i.indexOf("05-ecommerce/") + "05-ecommerce/".length,
+              i.length - 4
+            );
+
+            cloudinary.api.delete_resources([`05-ecommerce/${public_id}`], {
+              type: "upload",
+              resource_type: "image",
+            });
+          });
+        }
+
         const deleted_product = await db
           .collection("productos")
           .deleteOne({ _id: new ObjectId(params.id) });
-
-        /*Borrar tambien imagenes de cloudinary*/
 
         return Response.json(
           {
