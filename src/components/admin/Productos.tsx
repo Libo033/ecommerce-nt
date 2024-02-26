@@ -1,12 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./page.module.css";
 import { AddCircleOutline, Search } from "@mui/icons-material";
 import { InputAdornment, Modal, TextField } from "@mui/material";
 import ProductoAdminCard from "./ProductoAdminCard";
 import ProductForm from "./ProductForm";
+import { ProductContext } from "@/context/ProductsContext";
 
 const Productos = () => {
+  const { products, loaded } = useContext(ProductContext);
   const [modal, setModal] = useState<boolean>(false);
 
   const handleClose = () => {
@@ -35,20 +37,9 @@ const Productos = () => {
         />
       </div>
       <section>
-        <ProductoAdminCard
-          _id={"1"}
-          marca={"jota"}
-          detalle={"Jota rojo carmesi 30Ml"}
-          img={[
-            "https://res.cloudinary.com/dsuydyqgz/image/upload/v1706882995/01-varios/rd8ntaaaq4ovveaksu9t.jpg",
-          ]}
-          categoria={"Perfumeria"}
-          precio={32000}
-          stock={3}
-          mostrar={true}
-          otros={[]}
-          genero={"femenino"}
-        />
+        {loaded &&
+          products.length > 0 &&
+          products.map((p) => <ProductoAdminCard key={p._id} {...p} />)}
       </section>
       <Modal open={modal} onClose={handleClose}>
         <>

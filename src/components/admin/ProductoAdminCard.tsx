@@ -14,7 +14,7 @@ interface IProductoAdminCard {
   stock: number;
   mostrar: boolean;
   otros: string[];
-  genero: "femenino" | "masculino" | "sin";
+  genero: string;
 }
 
 const ProductoAdminCard: React.FC<IProductoAdminCard> = (props) => {

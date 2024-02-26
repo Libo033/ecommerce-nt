@@ -80,11 +80,12 @@
   justify-content: center;
   align-items: center;
   width: 270px;
+  height: 270px;
 }
 
 .ProductoAdminCard_Img img {
   width: 100%;
-  height: auto;
+  height: 100%;
   border-radius: 12px;
   object-fit: cover;
 }
