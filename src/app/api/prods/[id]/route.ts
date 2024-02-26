@@ -114,6 +114,8 @@ export async function DELETE(
           .collection("productos")
           .deleteOne({ _id: new ObjectId(params.id) });
 
+        /*Borrar tambien imagenes de cloudinary*/
+
         return Response.json(
           {
             code: 200,

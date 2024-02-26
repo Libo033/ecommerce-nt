@@ -1,8 +1,10 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./page.module.css";
 import { Button } from "@mui/material";
 import { Delete, Edit, Visibility, VisibilityOff } from "@mui/icons-material";
+import { ProductContext } from "@/context/ProductsContext";
 
 interface IProductoAdminCard {
   _id: string;
@@ -18,6 +20,7 @@ interface IProductoAdminCard {
 }
 
 const ProductoAdminCard: React.FC<IProductoAdminCard> = (props) => {
+  const { deleteOneProduct } = useContext(ProductContext);
   return (
     <article className={styles.ProductoAdminCard}>
       <div className={styles.ProductoAdminCard_Img}>
@@ -62,7 +65,13 @@ const ProductoAdminCard: React.FC<IProductoAdminCard> = (props) => {
           <Edit />
           Editar
         </Button>
-        <Button fullWidth sx={{ gap: "8px" }} variant="outlined" color="error">
+        <Button
+          fullWidth
+          sx={{ gap: "8px" }}
+          onClick={() => deleteOneProduct(props._id)}
+          variant="outlined"
+          color="error"
+        >
           <Delete />
           Eliminar
         </Button>
