@@ -1,5 +1,11 @@
 "use client";
-import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import styles from "./page.module.css";
 import {
   Button,
@@ -24,7 +30,7 @@ interface IProductForm {
 }
 
 const ProductForm: React.FC<IProductForm> = ({ id, handleClose }) => {
-  const { createOneProduct } = useContext(ProductContext);
+  const { products, createOneProduct } = useContext(ProductContext);
   const { categories, loaded } = useContext(CategoryContext);
   const [categoria, setCategoria] = useState<string>("");
   const [genero, setGenero] = useState<string>("sin");
@@ -63,6 +69,11 @@ const ProductForm: React.FC<IProductForm> = ({ id, handleClose }) => {
     if (creado) handleClose();
   };
 
+  useEffect(() => {
+    if (id) {
+    }
+  }, []); // cuando hay ID settear todo.
+
   return (
     <form
       className={styles.ModalProduct}
@@ -76,6 +87,7 @@ const ProductForm: React.FC<IProductForm> = ({ id, handleClose }) => {
           sx={{ margin: "9px 0px" }}
           {...textFieldProps}
           label="ID"
+          value={id}
           disabled
         />
       )}

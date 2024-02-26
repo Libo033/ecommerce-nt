@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useContext } from "react";
+import React, { SetStateAction, useContext } from "react";
 import styles from "./page.module.css";
 import { Button } from "@mui/material";
 import { Delete, Edit, Visibility, VisibilityOff } from "@mui/icons-material";
@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/autoplay";
+import { useRouter } from "next/navigation";
 
 interface IProductoAdminCard {
   _id: string;
@@ -21,10 +22,18 @@ interface IProductoAdminCard {
   mostrar: boolean;
   otros: string[];
   genero: string;
+  setModal: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const ProductoAdminCard: React.FC<IProductoAdminCard> = (props) => {
   const { deleteOneProduct } = useContext(ProductContext);
+  const router = useRouter();
+
+  const handleEdit = () => {
+    router.push(`/admin/productos?id=${props._id}`);
+    props.setModal(true);
+  };
+
   return (
     <article className={styles.ProductoAdminCard}>
       <div className={styles.ProductoAdminCard_Img}>
@@ -78,6 +87,7 @@ const ProductoAdminCard: React.FC<IProductoAdminCard> = (props) => {
           sx={{ gap: "8px" }}
           variant="outlined"
           color="primary"
+          onClick={() => handleEdit()}
         >
           <Edit />
           Editar

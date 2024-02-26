@@ -6,12 +6,16 @@ import { InputAdornment, Modal, Skeleton, TextField } from "@mui/material";
 import ProductoAdminCard from "./ProductoAdminCard";
 import ProductForm from "./ProductForm";
 import { ProductContext } from "@/context/ProductsContext";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Productos = () => {
   const { products, loaded } = useContext(ProductContext);
   const [modal, setModal] = useState<boolean>(false);
+  const params = useSearchParams();
+  const router = useRouter();
 
   const handleClose = () => {
+    if (params.get("id")) router.push(`/admin/productos`);
     setModal(false);
   };
 
@@ -39,7 +43,9 @@ const Productos = () => {
       <section>
         {loaded ? (
           products.length > 0 ? (
-            products.map((p) => <ProductoAdminCard key={p._id} {...p} />)
+            products.map((p) => (
+              <ProductoAdminCard key={p._id} {...p} setModal={setModal} />
+            ))
           ) : (
             <>
               <p
@@ -79,7 +85,7 @@ const Productos = () => {
       </section>
       <Modal open={modal} onClose={handleClose}>
         <>
-          <ProductForm id={null} handleClose={handleClose} />
+          <ProductForm id={params.get("id")} handleClose={handleClose} />
         </>
       </Modal>
     </div>
