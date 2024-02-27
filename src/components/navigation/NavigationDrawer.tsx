@@ -83,7 +83,7 @@ const NavigationDrawer: React.FC<{
         </div>
       )}
       <div className={styles.Drawer_Items}>
-        <AccordionItems {...categories} /> {/* items = categorias de venta */}
+        <AccordionItems items={categories} /> {/* items = categorias de venta */}
       </div>
       {user && ( // LOGOUT
         <div style={{ paddingTop: "12px" }} className={styles.Drawer_Sesion}>

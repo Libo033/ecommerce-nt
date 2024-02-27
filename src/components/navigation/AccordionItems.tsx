@@ -44,7 +44,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-const AccordionItems: React.FC<ICategory[]> = (props) => {
+const AccordionItems: React.FC<{ items: ICategory[] }> = ({ items }) => {
   const router = useRouter();
   const [expanded, setExpanded] = useState<string | false>("");
 
@@ -55,7 +55,7 @@ const AccordionItems: React.FC<ICategory[]> = (props) => {
 
   return (
     <>
-      {props.map((i) => (
+      {items.map((i) => (
         <Accordion
           key={i._id}
           expanded={expanded === i._id}
