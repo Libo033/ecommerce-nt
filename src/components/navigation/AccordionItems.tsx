@@ -9,6 +9,7 @@ import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { useRouter } from "next/navigation";
 import { styled } from "@mui/material";
+import { ICategory } from "@/libs/interfaces";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -43,13 +44,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-const AccordionItems: React.FC<{
-  items: Array<{
-    _id: string;
-    categoria: string;
-    opciones: Array<{ _id: string; info: string }>;
-  }>;
-}> = ({ items }) => {
+const AccordionItems: React.FC<ICategory[]> = (props) => {
   const router = useRouter();
   const [expanded, setExpanded] = useState<string | false>("");
 
@@ -60,40 +55,24 @@ const AccordionItems: React.FC<{
 
   return (
     <>
-      {items.length > 0 &&
-        items.map((i) => (
-          <Accordion
-            key={i._id}
-            expanded={expanded === i._id}
-            onChange={handleChange(i._id)}
-          >
-            <AccordionSummary>{i.categoria}</AccordionSummary>
-            <AccordionDetails sx={{ backgroundColor: "#fff" }}>
-              <ul className={styles.List}>
-                {i.opciones.length > 0 &&
-                  i.opciones.map((o) => (
-                    <li
-                      key={o._id}
-                      onClick={() =>
-                        router.push(
-                          `/prods/${i.categoria.toLowerCase()}?by=${o._id}`
-                        )
-                      }
-                    >
-                      {o.info}
-                    </li>
-                  ))}
-                <li
-                  onClick={() =>
-                    router.push(`/prods/${i.categoria.toLowerCase()}`)
-                  }
-                >
-                  Ver todo en {i.categoria}
-                </li>
-              </ul>
-            </AccordionDetails>
-          </Accordion>
-        ))}
+      {props.map((i) => (
+        <Accordion
+          key={i._id}
+          expanded={expanded === i._id}
+          onChange={handleChange(i._id)}
+        >
+          <AccordionSummary>{i.nombre}</AccordionSummary>
+          <AccordionDetails sx={{ backgroundColor: "#fff" }}>
+            <ul className={styles.List}>
+              <li
+                onClick={() => router.push(`/prods/${i.nombre.toLowerCase()}`)}
+              >
+                Ver todo en {i.nombre}
+              </li>
+            </ul>
+          </AccordionDetails>
+        </Accordion>
+      ))}
     </>
   );
 };

@@ -8,6 +8,7 @@ import NavigationDrawer from "./NavigationDrawer";
 import NavigationBarOptions from "./NavigationBarOptions";
 import { usePathname } from "next/navigation";
 import { AuthContext } from "@/context/AuthContext";
+import { CategoryContext } from "@/context/CategoryContext";
 
 const NavigationBar: React.FC<{
   logo: string;
@@ -15,29 +16,11 @@ const NavigationBar: React.FC<{
   profile: string;
   cart: string;
 }> = ({ logo, name, profile, cart }) => {
+  const { categories } = useContext(CategoryContext);
   const { user, loaded, getUserRole, logOut } = useContext(AuthContext);
   const pathname = usePathname();
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false);
   const [admin, setAdmin] = useState<boolean>(false);
-
-  let items = [
-    {
-      _id: "1",
-      categoria: "Perfumeria",
-      opciones: [
-        { _id: "1", info: "Perfumes de hombre" },
-        { _id: "2", info: "Perfumes de mujer" },
-      ],
-    },
-    {
-      _id: "2",
-      categoria: "Cabello",
-      opciones: [
-        { _id: "1", info: "Para lavar" },
-        { _id: "2", info: "Para tratar" },
-      ],
-    },
-  ];
 
   useEffect(() => {
     getUserRole().then((isAdmin) => setAdmin(isAdmin));
@@ -100,12 +83,10 @@ const NavigationBar: React.FC<{
         style={pathname.includes("prods") ? { display: "none" } : undefined}
         className={styles.NavigationBar_Items}
       >
-        {items.length > 0 &&
-          items.map((i) => (
+        {categories.length > 0 &&
+          categories.map((i) => (
             <div className={styles.Category} key={i._id}>
-              <Link href={`/prods/${i.categoria.toLowerCase()}`}>
-                {i.categoria}
-              </Link>
+              <Link href={`/prods/${i.nombre.toLowerCase()}`}>{i.nombre}</Link>
             </div>
           ))}
       </div>

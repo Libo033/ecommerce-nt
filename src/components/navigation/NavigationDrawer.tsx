@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./page.module.css";
 import { Button, Divider } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -12,32 +12,15 @@ import {
   ShoppingCart,
 } from "@mui/icons-material";
 import { User } from "firebase/auth";
+import { CategoryContext } from "@/context/CategoryContext";
 
 const NavigationDrawer: React.FC<{
   user: User | null;
   logOut: () => Promise<void>;
   admin: boolean;
 }> = ({ user, logOut, admin }) => {
+  const { categories } = useContext(CategoryContext);
   const router = useRouter();
-
-  let items = [
-    {
-      _id: "1",
-      categoria: "Perfumeria",
-      opciones: [
-        { _id: "1", info: "Perfumes de hombre" },
-        { _id: "2", info: "Perfumes de mujer" },
-      ],
-    },
-    {
-      _id: "2",
-      categoria: "Cabello",
-      opciones: [
-        { _id: "1", info: "Para lavar" },
-        { _id: "2", info: "Para tratar" },
-      ],
-    },
-  ];
 
   return (
     <div className={styles.Drawer}>
@@ -100,7 +83,7 @@ const NavigationDrawer: React.FC<{
         </div>
       )}
       <div className={styles.Drawer_Items}>
-        <AccordionItems items={items} /> {/* items = categorias de venta */}
+        <AccordionItems {...categories} /> {/* items = categorias de venta */}
       </div>
       {user && ( // LOGOUT
         <div style={{ paddingTop: "12px" }} className={styles.Drawer_Sesion}>
