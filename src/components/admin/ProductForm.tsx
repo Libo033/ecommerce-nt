@@ -30,7 +30,8 @@ interface IProductForm {
 }
 
 const ProductForm: React.FC<IProductForm> = ({ id, handleClose }) => {
-  const { products, createOneProduct } = useContext(ProductContext);
+  const { products, createOneProduct, updateOneProduct } =
+    useContext(ProductContext);
   const { categories, loaded } = useContext(CategoryContext);
   const [categoria, setCategoria] = useState<string>("");
   const [genero, setGenero] = useState<string>("sin");
@@ -49,8 +50,8 @@ const ProductForm: React.FC<IProductForm> = ({ id, handleClose }) => {
 
     let d = document;
 
-    let newProduct: IProduct = {
-      _id: "",
+    let prod: IProduct = {
+      _id: id?.toString() || "",
       marca: (d.getElementById("marca") as HTMLInputElement).value,
       categoria,
       genero,
@@ -64,15 +65,38 @@ const ProductForm: React.FC<IProductForm> = ({ id, handleClose }) => {
       stock: parseInt((d.getElementById("stock") as HTMLInputElement).value),
     };
 
-    const creado = await createOneProduct(newProduct);
+    if (id) {
+      const mod = await updateOneProduct(prod);
 
-    if (creado) handleClose();
+      if (mod) handleClose();
+    } else {
+      const creado = await createOneProduct(prod);
+
+      if (creado) handleClose();
+    }
   };
 
   useEffect(() => {
     if (id) {
+      products.forEach((p) => {
+        if (p._id === id) {
+          (document.getElementById("marca") as HTMLInputElement).value =
+            p.marca;
+          (document.getElementById("detalle") as HTMLInputElement).value =
+            p.detalle;
+          (document.getElementById("precio") as HTMLInputElement).value =
+            p.precio.toString();
+          (document.getElementById("stock") as HTMLInputElement).value =
+            p.stock.toString();
+          setOtros(p.otros);
+          setMostrar(p.mostrar);
+          setImg(p.img);
+          setGenero(p.genero);
+          setCategoria(p.categoria);
+        }
+      });
     }
-  }, []); // cuando hay ID settear todo.
+  }, [id]); // cuando hay ID settear todo.
 
   return (
     <form
@@ -151,6 +175,7 @@ const ProductForm: React.FC<IProductForm> = ({ id, handleClose }) => {
           control={
             <Checkbox
               value={mostrar}
+              checked={mostrar}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setMostrar(e.target.checked)
               }
