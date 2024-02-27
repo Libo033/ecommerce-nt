@@ -9,7 +9,6 @@ const Admin = () => {
       <div>
         <MiniCard name="Categorias" />
         <MiniCard name="Productos" />
-        <MiniCard name="Ofertas" />
       </div>
     </div>
   );
