@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ArrowForwardIosSharp, AttachMoney } from "@mui/icons-material";
 import MuiAccordionSummary, {
   AccordionSummaryProps,
@@ -19,6 +19,8 @@ import {
 import styles from "./page.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import { handleSetQuery, handleSetQueryPrice } from "@/libs/FilterHelpers";
+import { CategoryContext } from "@/context/CategoryContext";
+import { ProductContext } from "@/context/ProductsContext";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -54,6 +56,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 const Filter = () => {
+  const { categories } = useContext(CategoryContext);
+  const { marcas } = useContext(ProductContext);
   const router = useRouter();
   const query = useSearchParams();
   const [expanded, setExpanded] = useState<string | false>("");
@@ -61,9 +65,6 @@ const Filter = () => {
   const handleChange = (panel: string) => (e: any, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
-
-  const categorias = ["Cabello", "Perfumeria"];
-  const marcas = ["Jota", "Am", "BBVA"];
 
   const inputProps: Partial<OutlinedInputProps> = {
     startAdornment: (
@@ -83,14 +84,14 @@ const Filter = () => {
         <AccordionSummary>Categoria</AccordionSummary>
         <AccordionDetails>
           <ul className={styles.List}>
-            {categorias.length > 0 &&
-              categorias.map((c) => (
+            {categories.length > 0 &&
+              categories.map((c) => (
                 <li
-                  key={c}
+                  key={c._id}
                   style={
                     query.get("categoria") === null
                       ? { display: "block" }
-                      : query.get("categoria") === c.toLowerCase()
+                      : query.get("categoria") === c.nombre.toLowerCase()
                       ? undefined
                       : { display: "none" }
                   }
@@ -98,12 +99,20 @@ const Filter = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={query.get("categoria") === c.toLowerCase()}
+                        checked={
+                          query.get("categoria") === c.nombre.toLowerCase()
+                        }
                       />
                     }
-                    label={c}
+                    label={c.nombre}
                     onClick={() =>
-                      handleSetQuery("categoria", c, query, router, setExpanded)
+                      handleSetQuery(
+                        "categoria",
+                        c.nombre,
+                        query,
+                        router,
+                        setExpanded
+                      )
                     }
                   />
                 </li>

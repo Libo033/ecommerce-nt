@@ -51,6 +51,7 @@ export interface IProduct {
 export interface IProductContext {
   loaded: boolean;
   products: IProduct[];
+  marcas: string[];
   createOneProduct: (newProduct: IProduct) => Promise<boolean>;
   updateOneProduct: (toUpdate: IProduct) => Promise<boolean>;
   deleteOneProduct: (id: string) => Promise<boolean>;

@@ -1,4 +1,5 @@
 "use client";
+import { getMarcas } from "@/libs/SetToArray";
 import { IProduct, IProductContext } from "@/libs/interfaces";
 import React, { useEffect, useState, createContext } from "react";
 
@@ -22,6 +23,7 @@ const productsDefault: IProduct[] = [
 const defaultValue: IProductContext = {
   products: productsDefault,
   loaded: false,
+  marcas: [""],
   createOneProduct: async (newProduct) => false,
   updateOneProduct: async (toUpdate) => false,
   deleteOneProduct: async (id) => false,
@@ -34,6 +36,7 @@ export const ProductContextProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   const [products, setProducts] = useState<IProduct[]>(productsDefault);
+  const [marcas, setMarcas] = useState<string[]>([""]);
   const [loaded, setLoaded] = useState(false);
 
   const createOneProduct = async (newProduct: IProduct) => {
@@ -103,6 +106,7 @@ export const ProductContextProvider: React.FC<{
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.productos);
+        setMarcas(getMarcas(data.productos));
         setLoaded(true);
       })
       .catch((err) => {
@@ -116,6 +120,7 @@ export const ProductContextProvider: React.FC<{
     <ProductContext.Provider
       value={{
         products,
+        marcas,
         loaded,
         createOneProduct,
         updateOneProduct,
